@@ -1,0 +1,307 @@
+.my-atropos {
+  width: 320px;
+  height: 160px;
+}
+
+#dashFooter {
+  background-color: unset !important;
+}
+
+.page-container {
+  min-height: 100vh;
+  padding: 20px;
+  color: #ffffff;
+}
+
+.custom-card {
+  background: #444444;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #f4bc41;
+}
+
+.custom-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.custom-table th {
+  color: #f4bc41;
+  background: #555555;
+  text-align: left;
+  padding: 10px;
+}
+
+.custom-table td {
+  padding: 10px;
+}
+
+.status.waiting {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.status.room-code {
+  color: #00b33c;
+  font-weight: bold;
+}
+
+.action-btn {
+  margin: 0 5px;
+}
+
+.pagination .page-item .page-link {
+  background-color: #444444;
+  color: #f4bc41;
+  border: none;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #f4bc41;
+  color: #333333;
+  font-weight: bold;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #f4bc41;
+  font-size: 1.5rem;
+}
+
+.earnings-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.header-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.earnings-title {
+  color: white;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.total-amount {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.select-limit {
+  width: 150px;
+  padding: 5px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #444;
+}
+
+.btn.export-btn {
+  background-color: #2980b9;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.date-picker {
+  margin: 10px 0;
+}
+
+.monthly-earnings h4 {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.amount-green {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.earning-card {
+  background: #333;
+  border: 1px solid #444;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  color: white;
+}
+
+.earning-card h5 {
+  font-size: 1rem;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.earning-card p {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.earning-card:hover {
+  transform: translateY(-5px);
+}
+
+.pagination .active .page-link {
+  background-color: #2980b9;
+  color: white;
+  border-radius: 50%;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  color: white;
+  background-color: #333;
+  padding: 5px 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  background-color: #2980b9;
+}
+
+.custom-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #fff;
+  margin: 20px 0;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 10px 15px;
+  text-align: left;
+}
+
+.custom-table th {
+  background-color: #f4f4f4;
+  color: #666;
+}
+
+.custom-table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.custom-table td {
+  font-size: 14px;
+  color: #333;
+}
+
+.status-new {
+  color: #0066cc;
+  font-weight: bold;
+}
+
+.status-running {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.status-conflict {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.status-requested {
+  color: #7f8c8d;
+  font-weight: bold;
+}
+
+.status-pending {
+  color: #ff9f00;
+  font-weight: bold;
+}
+
+.status-default {
+  color: #000000;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  font-size: 14px;
+  padding: 5px 10px;
+  text-transform: uppercase;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #007bff;
+}
+
+.page-link:hover {
+  color: #0056b3;
+}
+
