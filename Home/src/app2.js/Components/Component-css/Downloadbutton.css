@@ -1,0 +1,32 @@
+.App {
+  color: #228b22;
+  text-align: center;
+}
+
+.my-sticky-footer {
+  text-align: center;
+  background-image: linear-gradient(rgb(61, 128, 197), rgb(37, 61, 118)) !important;
+  color: #fff;
+  padding: 20px; 
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.btn .shine {
+  position: absolute;
+  top: 350;
+  left: -100%;
+  width: 10%;
+  height: 150%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.5) 100%);
+  animation: shineAnimation 2s infinite alternate;
+}
+
+@keyframes shineAnimation {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}

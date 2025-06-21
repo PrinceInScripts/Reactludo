@@ -1,0 +1,79 @@
+h1 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    font-size: 2rem; /* Adjusted size */
+    font-family: "Roboto";
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    color: #336699; /* Changed heading color */
+}
+
+h4 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: bold;
+    line-height: 1.2;
+    font-size: 1.2rem !important; /* Adjusted size */
+    font-family: "Roboto";
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    color: #4c4c4c; /* Changed heading color */
+}
+
+p {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+    font-family: "Roboto";
+    font-size: 0.9rem !important; /* Adjusted size */
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    color: #666; /* Changed text color */
+}
+
+a {
+    color: #0066cc !important; /* Changed link color */
+    text-decoration: none;
+    font-family: "Roboto";
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:hover {
+    color: #004080; /* Changed hover color */
+    text-decoration: underline;
+}
+
+span {
+    font-family: "Roboto";
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    color: #000; /* Changed text color */
+}
+
+/* Update styles for other elements as needed */
+footer {
+  padding: 0px;
+  background-color: #fff;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.center-bold-dark {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: dark;
+}
+
+
+@keyframes slideIn {
+  from {
+    transform: translateY(50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

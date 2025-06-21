@@ -1,0 +1,217 @@
+.collapsible-card {
+    border: 2px solid #4facfe; /* Default border color with linear gradient */
+    border-image: linear-gradient(135deg, #0000ff, #000000); /* Linear gradient border color */
+    border-image-slice: 1; /* Ensure the entire border is covered by the gradient */
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+    transition: box-shadow 0.5s ease, transform 0.5s ease; /* Add transition for smooth hover effect */
+}
+
+.collapsible-card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Add a subtle box-shadow on hover */
+    transform: translateY(-20px); /* Add a translateY transform for a lifting effect */
+}
+
+.collapsible-card.active {
+    border: 2px solid #27ae60; /* Change border color when card is active to a fresh green */
+    background-color: #fff; /* Set background color when card is active to white */
+}
+
+.header {
+    color: #2c3e50; /* Update text color for the header */
+    font-weight: bold; /* Make the header text bold */
+    margin-bottom: 1px; /* Add some space below the header */
+}
+
+.content {
+    color: #34495e; /* Set text color for the content */
+    /* Your styles for the content text */
+}
+
+.content {
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    height: 100dvh;
+    background-color: #000000d4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999999;
+}
+
+.content .loading {
+    width: 80px;
+    height: 50px;
+    position: relative;
+}
+
+.content .loading p {
+    top: 0;
+    padding: 0;
+    margin: 0;
+    color: #5389a6;
+    font-family: Oxygen, sans-serif;
+    animation: text 3.5s ease both infinite;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+@keyframes text {
+    0% {
+        letter-spacing: 1px;
+        transform: translateX(0);
+    }
+    40% {
+        letter-spacing: 2px;
+        transform: translateX(26px);
+    }
+    80% {
+        letter-spacing: 1px;
+        transform: translateX(32px);
+    }
+    90% {
+        letter-spacing: 2px;
+        transform: translateX(0);
+    }
+    100% {
+        letter-spacing: 1px;
+        transform: translateX(0);
+    }
+}
+
+.content .loading span {
+    background-color: #5389a6;
+    border-radius: 50px;
+    display: block;
+    height: 16px;
+    width: 16px;
+    bottom: 0;
+    position: absolute;
+    transform: translateX(64px);
+    animation: loading 3.5s ease both infinite;
+}
+
+.content .loading span:before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: #a6dcee;
+    border-radius: inherit;
+    animation: loading2 3.5s ease both infinite;
+}
+
+@keyframes loading {
+    0% {
+        width: 16px;
+        transform: translateX(0);
+    }
+    40% {
+        width: 100%;
+        transform: translateX(0);
+    }
+    80% {
+        width: 16px;
+        transform: translateX(64px);
+    }
+    90% {
+        width: 100%;
+        transform: translateX(0);
+    }
+    100% {
+        width: 16px;
+        transform: translateX(0);
+    }
+}
+
+@keyframes loading2 {
+    0% {
+        transform: translateX(0);
+        width: 16px;
+    }
+    40% {
+        transform: translateX(0);
+        width: 80%;
+    }
+    80% {
+        width: 100%;
+        transform: translateX(0);
+    }
+    90% {
+        width: 80%;
+        transform: translateX(15px);
+    }
+    100% {
+        transform: translateX(0);
+        width: 16px;
+    }
+}
+.spinner-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.legal-terms-container {
+  padding: 20px;
+}
+
+.custom-div-padding {
+  padding: 15px;
+}
+
+.card {
+  background-color: #ffffff;
+}
+
+.collapsible-card {
+  cursor: pointer;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin: 0 auto;
+  width: 93%;
+}
+
+.content {
+  display: none;
+}
+
+.content.show {
+  display: block;
+}
+
+.content.hide {
+  display: none;
+}
+
+.btn-custom-padding {
+  padding: 10px 20px;
+}
+
+.center-bold-dark {
+  font-weight: bold;
+  color: #333;
+}

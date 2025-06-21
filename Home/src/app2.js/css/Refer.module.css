@@ -1,0 +1,126 @@
+.main-area {
+    background-color: #ffffff;
+    overflow: hidden;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.center_xy {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Add the following styles for buttons */
+.button_class {
+    background-color: #your_color !important;
+    color: #your_text_color !important;
+    box-shadow: 0px 4px 8px rgba(40, 167, 69);
+    /* Add any other styles you want */
+}
+
+.progress {
+    height: 1rem;
+    line-height: 0;
+    font-size: 0.75rem;
+    background-color: rgb(233, 236, 239);
+    border-radius: 0.25rem;
+    display: flex;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.progress_bar {
+    display: flex;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    flex-direction: column;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    white-space: nowrap;
+    background-color: rgb(0, 123, 255);
+    transition: width 0.6s ease;
+    transition-duration: 0.6s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    transition-property: width;
+}
+
+.progress_bar_striped {
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 0px, transparent 50%, rgba(255, 255, 255, 0.15) 0px, rgba(255, 255, 255, 0.15) 75%, transparent 0px, transparent);
+    background-size: 1rem 1rem;
+}
+
+.bg_success {
+    background-color: rgb(39, 173, 24) !important;
+}
+
+.refer_footer {
+    position: absolute;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-top: 1px solid #0bfc03;
+    bottom: 0px;
+    display: flex;
+    height: 73px;
+    left: 0px;
+    max-width: 480px;
+    padding: 0 30px;
+    width: 100%;
+    z-index: 3;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(224, 224, 224);
+    padding-top: 0px;
+    padding-right: 30px;
+    padding-bottom: 0px;
+    padding-left: 30px;
+}
+
+.font_11 {
+    color: #2c2c2c;
+    font-size: 1.1em;
+    font-weight: 900;
+}
+
+.text_bold {
+    color: #2c2c2c;
+    font-size: 1em;
+    font-weight: 800;
+}
+
+.font_9 {
+    color: #2c2c2c !important;
+    font-weight: 700 !important;
+    font-size: 0.9em !important;
+}
+
+.font_8 {
+    font-weight: 500 !important;
+    font-size: 0.8em !important;
+}
+
+.c_green {
+    color: #0db25b !important;
+}
+
+.font-9 {
+  font-weight: bold;
+}
+
+.earn-text {
+  animation: changeColor 10s infinite;
+}
+
+@keyframes changeColor {
+  0% { color: green; }
+  20% { color: blue; }
+  40% { color: red; }
+  60% { color: orange; }
+  80% { color: purple; }
+  100% { color: green; }
+}

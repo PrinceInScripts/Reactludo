@@ -1,0 +1,128 @@
+/* Global Styles */
+.profile_wallet {
+    height: 70px;
+    mix-blend-mode: normal;
+    opacity: 1;
+    background: linear-gradient(135deg, #fff, #f4f4f4);
+    border: 2px solid #2e3a48;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.my_text {
+    font-size: 0.9em;
+    color: #000000;
+}
+
+.my_text2 {
+    font-size: 0.9em;
+    color: #000000;
+}
+
+.divider_x {
+    background: #bdc3c7;
+    width: 105%;
+    height: 20px;
+}
+
+/* Wallet Cards */
+.wallet_card,
+.wallet_card2,
+.new_wallet_card,
+.dark_wallet_card {
+    background-size: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    max-width: 480px;
+    height: 209px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    animation: slideUpAndFade 1s ease-in-out forwards;
+}
+
+.wallet_card {
+    background: linear-gradient(135deg, #fff, #f4f4f4);
+}
+
+.wallet_card2 {
+    background: linear-gradient(135deg, #fff, #f4f4f4);
+    animation: slideRightAndFade 1s ease-in-out forwards;
+}
+
+.new_wallet_card {
+    background: linear-gradient(135deg, #ffcc00, #ff6699);
+    animation: popUp 0.8s ease-out forwards;
+}
+
+.dark_wallet_card {
+    background: #2c3e50;
+}
+
+@keyframes slideUpAndFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideRightAndFade {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes popUp {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Wallet Card Buttons */
+.walletCard_btn,
+.walletWCard_btn,
+.new_walletCard_btn,
+.dark_walletCard_btn {
+    position: absolute;
+    right: 20px;
+    top: 30px;
+    height: 30px;
+    width: 120px;
+    border-radius: 5px;
+    font-size: 0.8em !important;
+    font-weight: 700;
+    padding: 6px 10px;
+    border: 2px solid black;
+    color: #fff;
+}
+
+.walletCard_btn {
+    background-color: #000000;
+}
+
+.walletWCard_btn {
+    background-color: #000000;
+}
+
+.new_walletCard_btn {
+    background-color: #000000;
+}
+
+.dark_walletCard_btn {
+    background-color: #34495e;
+}

@@ -1,0 +1,199 @@
+#hambergar:hover {
+    background-color: transparent !important;
+}
+.sideNav-divider {
+    background-color:#000; /* Dark grey color */
+    bottom:0px;
+    height: 1px;
+    left: 1px; /* Changed left value */
+    position: absolute;
+    right: 0;
+}
+
+.sideNav-arrow {
+    position: absolute;
+    right: 25px;
+}
+
+.sideNav-arrow>img {
+    height: 11px;
+    max-width: 100%;
+    width: 6px;
+}
+
+.w3-button {
+    color: white;
+    margin: auto;
+    right: 0;
+    top: 20px;
+    padding: 0.25rem;
+    transition: transform 0.3s ease-in-out;
+}
+
+.wallet-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wallet-balance {
+  background-color: #38bdf8; /* sky blue */
+  color: white;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: sans-serif;
+}
+
+.wallet-add-btn {
+  background-color: #38bdf8; /* sky blue */
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.wallet-add-btn:hover {
+  background-color: #0ea5e9; /* darker sky blue on hover */
+}
+
+.icon-plus {
+  width: 20px;
+  height: 20px;
+}
+
+
+.w3-button.active {
+    transform: translateX(-100px);
+}
+.w3-sidebar {
+    width: 70%;
+    max-width: 300px;
+    height: 100%;
+    background-color: #F8F9FB; /* Light gray background */
+    color: black !important;
+    position: fixed;
+    top: 0;
+    left: -500px;
+    height: 100vh;
+    transition: all 0.5s;
+    z-index: 99999999 !important;
+}
+
+
+.w3-container {
+    padding: 0px;
+    top: 0 !important;
+    margin: auto;
+    background: #008080 !important; /* Teal background */
+}
+
+
+.w3-teal {
+    background: white !important;
+}
+.w3-bar-block .w3-bar-item:nth-child(even) {
+    background-color: #fff; /* Color 1 */
+}
+
+.w3-bar-block .w3-bar-item:nth-child(odd) {
+    background-color: #fff; /* Color 2 */
+} 
+.w3-bar-block .w3-bar-item {
+    height: 57px;
+    position: relative;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    color: #333 !important; /* Change text color to a darker shade for better visibility */
+    transition: background 0.3s ease;
+    border-bottom: 0.1px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    font-weight: none;
+}
+
+.w3-bar-block .w3-bar-item1 {
+    /* height: 74px; */
+    /* position: relative; */
+    width: 100%;
+    align-items: center;
+    display: flex;
+    color: #333 !important;
+    transition: background 0.3s ease;
+    border-bottom: 0.1px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    font-weight: none;
+    display: flex
+;
+    justify-content: space-between;
+}
+
+/* .w3-bar-block .w3-bar-item:hover {
+    background-image: linear-gradient(rgb(0, 0, 255), rgb(255, 255, 255));
+    color: black !important;
+    transform: translateX(0px); 
+} 
+*/
+.w3-button.active {
+  background: linear-gradient(90deg, #007bff, #00d4ff);
+  color: white !important;
+  transform: translateX(0px); 
+}
+
+.arrow {
+    position: absolute;
+    right: 25px;
+}
+
+.arrow>img {
+    height: 20px;
+    width: 6px;
+    max-width: 100%;
+}
+
+.icon {
+    overflow: hidden;
+    position: relative;
+}
+
+.icon>img {
+    height: 30px;
+    width: 30px;
+}
+#sidebarOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999999;
+    display: none;
+    transition: all 0.5s ease-in-out 0s;
+}
+/* Styles for the small live indicator */
+.small-live-indicator {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 2px 5px;
+  background-color: red;
+  color: white;
+  border-radius: 10px;
+  font-size: 0.7rem; /* Adjusted font size to make it very small */
+  font-weight: bold;
+  animation: blink 1s infinite;
+}
+
+/* Keyframes for the blinking effect */
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}

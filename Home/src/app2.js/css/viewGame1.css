@@ -1,0 +1,214 @@
+
+.battleCard .amount {
+    font-size: 0.85em;
+    font-weight: 1000;
+    padding-bottom: 10px;
+}
+
+.button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 2px solid transparent; /* Set a transparent border initially */
+  cursor: pointer;
+}
+
+/* Styles for the back button */
+.backButton {
+  float: left;
+  background-color: #000000; /* Make sure there are six digits in the hex color */
+  color: #fff;
+  border-radius: 5px;
+}
+
+/* Styles for the rules button */
+.rulesButton {
+  float: right;
+  background-color: #2ecc71;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.custom-btn {
+    background-color: green; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold; /* Bold text */
+    border: 1px solid green; /* Green border */
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+.custom-btn:hover {
+    background-color: #cc0000; /* Adjust the hover color as needed */
+}
+
+.custom-btn:active,
+.custom-btn:focus {
+    background-color: red; /* Adjust the click color as needed */
+    color: #ffffff; /* Change text color to white on click */
+    outline: none; /* Remove default focus outline */
+}
+
+
+.cxy, .refer-button-copy {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+/* Padding Styles */
+.pt-2, .py-2 {
+    padding-top: 1rem!important;
+}
+
+.battleCard .roomCode {
+    background-color: transparent;
+    border: 1px solid #dfdfdf; /* Black border */
+    margin: 15px auto; /* Centering the element horizontally */
+    border-radius: 10px;
+    padding: 30px 20px;
+    font-size: 1em;
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
+    width: 96%; /* Making the width full */
+}
+
+
+
+.battleCard .roomCode .copyButton:hover {
+    background-color: #fff; /* Darker green color on hover */
+}
+
+
+.battleCard .result-area .radios {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 2px;
+}
+
+.battleCard .result-area button {
+    border: none;
+    padding: 10px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.battleCard .result-area .red-button {
+    background-color: #ff0000; /* Red color */
+    color: #fff; /* White text */
+}
+
+.battleCard .result-area .blue-button {
+    background-color: #0000ff; /* Blue color */
+    color: #fff; /* White text */
+}
+
+.battleCard .result-area .green-button {
+    background-color: #00ff00; /* Green color */
+    color: #fff; /* Black text */
+}
+
+
+/* Game Status Buttons */
+.battleCard .result-area button {
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 25px;
+    margin-left: 18px;
+    width: 90%;
+    background-color: #3498db;
+    color: #fff;
+    transform: translateY(2px);
+}
+.select-wrapper select {
+  transition: border-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.select-wrapper:hover select {
+  border-color: #555;
+  transform: scale(1.05);
+}
+
+.new-button-style {
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid green;
+  color: black; /* Set text color to black */
+  background-color: white;
+  cursor: pointer;
+  border-radius: 6px; /* Curved borders */
+  transition: background-color 0.3s ease, color 0.3s ease, border-width 0.3s ease, border-radius 0.3s ease;
+}
+
+.new-button-style:hover {
+  background-color: green; /* Change the background color on hover */
+}
+
+.new-button-style:active {
+  background-color: green; /* Change the background color when button is clicked */
+}
+
+.new2-button-style {
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid blue;
+  color: black; /* Set text color to black */
+  background-color: white;
+  cursor: pointer;
+  border-radius: 6px; /* Curved borders */
+  transition: background-color 0.3s ease, color 0.3s ease, border-width 0.3s ease, border-radius 0.3s ease;
+}
+
+.new2-button-style:hover {
+  background-color: red; /* Change the background color on hover */
+}
+
+.new2-button-style:active {
+  background-color: red; /* Change the background color when button is clicked */
+}
+
+.new3-button-style {
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: 1px solid blue;
+  color: black; /* Set text color to black */
+  background-color: white;
+  cursor: pointer;
+  border-radius: 6px; /* Curved borders */
+  transition: background-color 0.3s ease, color 0.3s ease, border-width 0.3s ease, border-radius 0.3s ease;
+}
+
+.new3-button-style:hover {
+  background-color: grey; /* Change the background color on hover */
+}
+
+.new3-button-style:active {
+  background-color: grey; /* Change the background color when button is clicked */
+}
+
+.grey-button {
+    width: 300%; /* Adjust the width as needed */
+    background-color: grey;
+    color: white;
+    padding: 10px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; /* Ensure the button is a block-level element */
+    margin: 0 10px; /* 0 top/bottom margin, 10px right/left margin */
+}

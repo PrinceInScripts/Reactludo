@@ -1,0 +1,38 @@
+.rules-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background-color: #f0f0f0; /* Light grey background color */
+}
+
+.rules-list li {
+  padding: 10px;
+  margin-bottom: 8px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease; /* Smooth transition */
+}
+
+.rules-list ul li {
+  margin-bottom: 5px;
+}
+
+.rules-list h3 {
+  color: #333;
+  border-bottom: 2px solid #004080;
+  padding-bottom: 5px;
+}
+
+.rules-list b {
+  color: #cc0000;
+}
+
+.rules-list li:nth-child(even) {
+  background-color: #f9f9f9; /* Lighter grey background color */
+}
+
+/* Add some color on hover */
+.rules-list li:hover {
+  background-color: #eaf6ff; /* Light blue background color */
+}
