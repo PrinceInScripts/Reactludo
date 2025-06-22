@@ -133,13 +133,17 @@ a .btn-danger.btn-sm.text-capitalize {
   align-self: flex-start;
       margin-top: 6px;
     border-top: 1px solid;
-    padding: 2px;
+    padding: 8px 2px;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
 }
 
 .game-info h3 {
-    color: #fff;
+    color: #2c5ede;
     font-family: sans-serif;
     font-weight: 800;
+    font-size: 1.5rem;
 }
 
 .small-game {
@@ -166,18 +170,21 @@ a .btn-danger.btn-sm.text-capitalize {
 }
 
 .play-btn {
-  background: red;
+  background: #2c5ede;
   color: #fff;
-  padding: 0.4rem 1rem;
+  padding: 0.6rem 1.5rem;
   border: none;
-  border-radius: 9999px;
+  border-radius: 10px;
   font-weight: bold;
   cursor: pointer;
   margin-top: 0.5rem;
+  font-size: 0.8rem;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
 }
 
 .play-btn:hover {
-  background: #eab308;
+  background: #2c5ede;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 /* Friend card */
 .friend-card {
@@ -248,25 +255,26 @@ a .btn-danger.btn-sm.text-capitalize {
     margin-top: 20px;
     justify-content: center;
     position: relative;
-    width: 46.8%;
-    border: 4px double rgb(142, 126, 248);
+    width: 48%;
+    /* border: 4px double rgb(142, 126, 248); */
     border-radius: 10px;
-    box-shadow: rgb(142, 126, 248) 0px 0px 10px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
      /* padding: 20px 10px; */
-     height: 250px;
+     /* height: 250px; */
      background-color: #000;
+     opacity: 0.7;
 }
 .gameCard-container1 {
     /* margin-top: 20px; */
-    height: 350px;
+    height: fit-content;
     justify-content: center;
     position: relative;
-    background-color: #000;
+    background-color: #f7f4f4;
     width: 100%;
-    border: 4px double rgb(142, 126, 248);
+    border-top: 4px solid #2c5ede;
     border-radius: 10px;
-    box-shadow: rgb(142, 126, 248) 0px 0px 10px;
-    padding: 40px 20px;
+    padding: 40px 20px 0 20px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
 
 .blink {
@@ -291,7 +299,7 @@ a .btn-danger.btn-sm.text-capitalize {
   position: absolute;
   top: 10px;
   left: -40px;
-  width: 200px;
+  width: 160px;
   text-align: center;
   background-color: red;
   color: white;
@@ -306,7 +314,7 @@ a .btn-danger.btn-sm.text-capitalize {
 
 .coming-soon-img{
   position: absolute;
-    top: -4px;
+    top: -2px;
     left: -1px;
     width: 10px;
     text-align: center;
@@ -329,6 +337,7 @@ a .btn-danger.btn-sm.text-capitalize {
   border-radius: 16px;
   overflow: hidden;
   margin-top: 12px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .card-image {

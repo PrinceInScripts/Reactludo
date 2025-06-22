@@ -321,7 +321,7 @@ export default function Landing() {
                     <img
                       width="100%"
                       height="80%"
-                      src="https://i.postimg.cc/9QVjbd7Q/Mscl.jpg"
+                      src="/khelobuddy/ludo-classic.png"
                       alt=""
                     />
                   </picture>
@@ -342,7 +342,7 @@ export default function Landing() {
                   }
                 >
                    <div class="coming-soon-img">
-                      <img src="/khelobuddy/comming-soon.png" width={"100px"} alt="" />
+                      <img src="/khelobuddy/comming-soon.png" width={"90px"} alt="" />
                    </div>
                   <picture
                     className="gameCard-image"
@@ -395,7 +395,7 @@ export default function Landing() {
                   }
                 >
                     <div class="coming-soon-img">
-                      <img src="/khelobuddy/comming-soon.png" width={"100px"} alt="" />
+                      <img src="/khelobuddy/comming-soon.png" width={"90px"} alt="" />
                    </div>
                   {/* <br /> */}
                   <picture

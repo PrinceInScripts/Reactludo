@@ -12,29 +12,54 @@ const Terms_condition = () => {
   const nodeMode = process.env.NODE_ENV;
 
   var baseUrl;
+  console.log(baseUrl);
   if (nodeMode === "development") {
     baseUrl = beckendLocalApiUrl;
   } else {
     baseUrl = beckendLiveApiUrl
   }
   const [WebSitesettings, setWebsiteSettings] = useState("");
-  const fetchData = async () => {
-    const response = await fetch(baseUrl + "settings/data");
-    const data = await response.json();
-    return setWebsiteSettings(data);
-  }
-  // const getdata = () => {
-
-  //   axios.get(baseUrl + `api/term/condition/term-condition`)
-  //     .then((res) => {
-  //       setData(res.data[0].Desc);
-  //       // console.log(res.data[0].Type);
-  //     })
+  // const fetchData = async () => {
+  //   const response = await fetch(baseUrl + "settings/data");
+  //   const data = await response.json();
+  //   return setWebsiteSettings(data);
   // }
-  useEffect(() => {
-    //getdata();
-    fetchData()
-  }, [])
+  // // const getdata = () => {
+
+  // //   axios.get(baseUrl + `api/term/condition/term-condition`)
+  // //     .then((res) => {
+  // //       setData(res.data[0].Desc);
+  // //       // console.log(res.data[0].Type);
+  // //     })
+  // // }
+  // useEffect(() => {
+  //   //getdata();
+  //   fetchData()
+  // }, [])
+
+
+  // Added by JK 
+    useEffect(() => {
+    let isMounted = true; // optional guard if component may unmount
+
+    async function loadSettings() {
+      try {
+        const res = await fetch(baseUrl + "settings/data");
+        const data = await res.json();
+        if (isMounted) setWebsiteSettings(data);
+      } catch (err) {
+        console.error("Failed to load settings:", err);
+      }
+    }
+
+    loadSettings();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []); // ✅ no missing-deps warning
+  // Added by JK 
+
   return (
     <div>
       <div className="leftContainer">

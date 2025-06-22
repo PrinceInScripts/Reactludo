@@ -15,7 +15,7 @@ button, input {
 button, input, optgroup, select, textarea {
     margin: 0 !important;
     font-family: inherit !important;
-    font-size: inherit !important;
+    font-size: inherit;
     line-height: inherit !important;
 }
 

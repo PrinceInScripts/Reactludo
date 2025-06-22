@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-
 import "../Components/Component-css/Header.css";
 import css from "./Component-css/Nav.module.css";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
@@ -21,7 +20,7 @@ const Header = ({ user, loggedIn }) => {
   const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API;
   const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API;
   const nodeMode = process.env.NODE_ENV;
-  const location=useLocation();
+  const location = useLocation();
   let baseUrl;
   if (nodeMode === "development") {
     baseUrl = beckendLocalApiUrl;
@@ -41,9 +40,7 @@ const Header = ({ user, loggedIn }) => {
     const data = await response.json();
     return setWebsiteSettings(data);
   };
-  document.title = WebSitesettings
-    ? WebSitesettings.WebTitle
-    : " ";
+  document.title = WebSitesettings ? WebSitesettings.WebTitle : " ";
 
   useEffect(() => {
     fetchData();
@@ -75,30 +72,26 @@ const Header = ({ user, loggedIn }) => {
   };
 
   return (
-      <div>
+    <div>
       {access_token ? (
         <React.Fragment>
           <div id="sidebarOverlay" onClick={w3_close}></div>
-         
+
           <div
             className="w3-sidebar w3-bar-block"
             id="mySidebar"
             style={{ paddingBottom: "70px" }}
-          > 
-           <div className="w3-bar-item1  w3-xlarge w3-center">
-            <div style={{ display: "flex", alignItems: "center" }}>
-               <picture className={`ml-2 ${css.navLogo} d-flex`}>
-                    <img
-                      src="/khelobuddy/logo.png"
-                      className="snip-img"
-                      alt=""
-                    />
-              </picture>
-              <div className={`${css.navLogoText} ml-2`}>
-                <b>Khelobuddy</b>
+          >
+            <div className="w3-bar-item1  w3-xlarge w3-center">
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <picture className={`ml-2 ${css.navLogo} d-flex`}>
+                  <img src="/khelobuddy/logo.png" className="snip-img" alt="" />
+                </picture>
+                <div className={`${css.navLogoText} ml-2`}>
+                  <b>Khelobuddy</b>
+                </div>
               </div>
-            </div>
-             
+
               <div className="w3-right w3-padding">
                 <button
                   className="w3-button w3-teal w3-xlarge"
@@ -112,11 +105,13 @@ const Header = ({ user, loggedIn }) => {
                     />
                   </picture>
                 </button>
-                </div>
-          </div>
-          <Link
+              </div>
+            </div>
+            <Link
               to={"/Profile"}
-              className={`w3-bar-item w3-button ${location.pathname === '/Profile' ? 'active' : ''}`}
+              className={`w3-bar-item w3-button ${
+                location.pathname === "/Profile" ? "active" : ""
+              }`}
               onClick={w3_close}
             >
               <picture className="icon">
@@ -138,10 +133,18 @@ const Header = ({ user, loggedIn }) => {
                 )}
               </picture>
               {/* <div style={{ display: "flex", alignItems: "center", flexDirection: "column" }}> */}
-                   <div style={{ marginLeft: ".5rem", fontSize: "18px", fontWeight: "none" }}>My Profile</div>
-                   {/* <div style={{ marginLeft: ".5rem", fontSize: "10px", fontWeight: "none" }}>{user && user.Name}</div> */}
+              <div
+                style={{
+                  marginLeft: ".5rem",
+                  fontSize: "18px",
+                  fontWeight: "none",
+                }}
+              >
+                My Profile
+              </div>
+              {/* <div style={{ marginLeft: ".5rem", fontSize: "10px", fontWeight: "none" }}>{user && user.Name}</div> */}
               {/* </div> */}
-             
+
               <picture className="sideNav-arrow">
                 <img
                   src={
@@ -156,7 +159,9 @@ const Header = ({ user, loggedIn }) => {
             </Link>
             <Link
               to={"/landing"}
-              className={`w3-bar-item w3-button ${location.pathname === '/landing' ? 'active' : ''}`}
+              className={`w3-bar-item w3-button ${
+                location.pathname === "/landing" ? "active" : ""
+              }`}
               onClick={w3_close}
             >
               <picture className="icon">
@@ -165,8 +170,15 @@ const Header = ({ user, loggedIn }) => {
                   src="https://cdn-icons-png.flaticon.com/128/10339/10339556.png"
                 />
               </picture>
-             <div style={{ marginLeft: ".5rem", fontSize: "18px", fontWeight: "" }}>
-             Play Games</div>
+              <div
+                style={{
+                  marginLeft: ".5rem",
+                  fontSize: "18px",
+                  fontWeight: "",
+                }}
+              >
+                Play Games
+              </div>
               <picture className="sideNav-arrow">
                 <img
                   src={
@@ -180,7 +192,9 @@ const Header = ({ user, loggedIn }) => {
             </Link>
             <Link
               to={"/wallet"}
-              className={`w3-bar-item w3-button ${location.pathname === '/wallet' ? 'active' : ''}`}
+              className={`w3-bar-item w3-button ${
+                location.pathname === "/wallet" ? "active" : ""
+              }`}
               onClick={w3_close}
             >
               <picture className="icon">
@@ -189,7 +203,15 @@ const Header = ({ user, loggedIn }) => {
                   src="https://cdn-icons-png.flaticon.com/128/869/869067.png"
                 />
               </picture>
-              <div style={{ marginLeft: ".5rem", fontSize: "18px", fontWeight: "" }}>My wallet</div>
+              <div
+                style={{
+                  marginLeft: ".5rem",
+                  fontSize: "18px",
+                  fontWeight: "",
+                }}
+              >
+                My wallet
+              </div>
               <picture className="sideNav-arrow">
                 <img
                   src={
@@ -203,7 +225,9 @@ const Header = ({ user, loggedIn }) => {
             </Link>
             <Link
               to={"/Gamehistory"}
-              className={`w3-bar-item w3-button ${location.pathname === '/Gamehistory' ? 'active' : ''}`}
+              className={`w3-bar-item w3-button ${
+                location.pathname === "/Gamehistory" ? "active" : ""
+              }`}
               onClick={w3_close}
             >
               <picture className="icon">
@@ -212,7 +236,15 @@ const Header = ({ user, loggedIn }) => {
                   src="https://cdn-icons-png.flaticon.com/128/2550/2550251.png"
                 />
               </picture>
-              <div style={{ marginLeft: ".5rem", fontSize: "18px", fontWeight: "" }}>History</div>
+              <div
+                style={{
+                  marginLeft: ".5rem",
+                  fontSize: "18px",
+                  fontWeight: "",
+                }}
+              >
+                History
+              </div>
 
               <picture className="sideNav-arrow">
                 <img
@@ -228,7 +260,9 @@ const Header = ({ user, loggedIn }) => {
             </Link>
             <Link
               to={"/refer"}
-              className={`w3-bar-item w3-button ${location.pathname === '/refer' ? 'active' : ''}`}
+              className={`w3-bar-item w3-button ${
+                location.pathname === "/refer" ? "active" : ""
+              }`}
               onClick={w3_close}
             >
               <picture className="icon">
@@ -237,13 +271,16 @@ const Header = ({ user, loggedIn }) => {
                   src="https://cdn-icons-png.flaticon.com/128/14809/14809873.png"
                 />
               </picture>
-              <div style={{ marginLeft: ".5rem", fontSize: "18px", fontWeight: "" }}>
+              <div
+                style={{
+                  marginLeft: ".5rem",
+                  fontSize: "18px",
+                  fontWeight: "",
+                }}
+              >
                 Refer and Earn
-                <div className="small-live-indicator">
-                  Now 2% 
-                </div>
+                <div className="small-live-indicator">Now 2%</div>
               </div>
-                      
 
               <picture className="sideNav-arrow">
                 <img
@@ -259,7 +296,9 @@ const Header = ({ user, loggedIn }) => {
             </Link>
             <Link
               to={"/Notification"}
-              className={`w3-bar-item w3-button ${location.pathname === '/Notification' ? 'active' : ''}`}
+              className={`w3-bar-item w3-button ${
+                location.pathname === "/Notification" ? "active" : ""
+              }`}
               onClick={w3_close}
             >
               <picture className="icon">
@@ -268,7 +307,15 @@ const Header = ({ user, loggedIn }) => {
                   src="https://cdn-icons-png.flaticon.com/128/3541/3541850.png"
                 />
               </picture>
-              <div style={{ marginLeft: ".5rem", fontSize: "18px", fontWeight: "" }}>Notification</div>
+              <div
+                style={{
+                  marginLeft: ".5rem",
+                  fontSize: "18px",
+                  fontWeight: "",
+                }}
+              >
+                Notification
+              </div>
 
               <picture className="sideNav-arrow">
                 <img
@@ -285,7 +332,9 @@ const Header = ({ user, loggedIn }) => {
 
             <Link
               to={"/support"}
-               className={`w3-bar-item w3-button ${location.pathname === '/support' ? 'active' : ''}`}
+              className={`w3-bar-item w3-button ${
+                location.pathname === "/support" ? "active" : ""
+              }`}
               onClick={w3_close}
             >
               <picture className="icon">
@@ -294,11 +343,18 @@ const Header = ({ user, loggedIn }) => {
                   src="https://cdn-icons-png.flaticon.com/128/10308/10308800.png"
                 />
               </picture>
-              <div style={{ marginLeft: ".5rem", fontSize: "18px", fontWeight: "" }}>Support
-                  {/*<div className="small-live-indicator">
+              <div
+                style={{
+                  marginLeft: ".5rem",
+                  fontSize: "18px",
+                  fontWeight: "",
+                }}
+              >
+                Support
+                {/*<div className="small-live-indicator">
       LiveChat 
     </div>*/}
-   </div>
+              </div>
               <picture className="sideNav-arrow">
                 <img
                   src={
@@ -313,7 +369,9 @@ const Header = ({ user, loggedIn }) => {
             </Link>
             <Link
               to={"/Legalterms"}
-               className={`w3-bar-item w3-button ${location.pathname === '/Legalterms' ? 'active' : ''}`}
+              className={`w3-bar-item w3-button ${
+                location.pathname === "/Legalterms" ? "active" : ""
+              }`}
               onClick={w3_close}
             >
               <picture className="icon">
@@ -322,7 +380,15 @@ const Header = ({ user, loggedIn }) => {
                   src="https://cdn-icons-png.flaticon.com/128/10288/10288959.png"
                 />
               </picture>
-              <div style={{ marginLeft: ".5rem", fontSize: "18px", fontWeight: "" }}>Legal Terms</div>
+              <div
+                style={{
+                  marginLeft: ".5rem",
+                  fontSize: "18px",
+                  fontWeight: "",
+                }}
+              >
+                Legal Terms
+              </div>
 
               <picture className="sideNav-arrow">
                 <img
@@ -333,13 +399,12 @@ const Header = ({ user, loggedIn }) => {
                   alt=""
                 />
               </picture>
-             <div className="sideNav-divider"></div>
-             </Link>
-          </div> 
-                 
+              <div className="sideNav-divider"></div>
+            </Link>
+          </div>
+
           <div className="w3-teal">
             <div className="w3-container ">
-            
               <div className={`${css.headerContainer} `}>
                 <button
                   className="w3-button w3-teal w3-xlarge float-left"
@@ -353,7 +418,7 @@ const Header = ({ user, loggedIn }) => {
                       alt=""
                     />
                   </picture>
-                </button> 
+                </button>
                 <Link to="/">
                   <picture className={`ml-2 ${css.navLogo} d-flex`}>
                     <img
@@ -363,17 +428,28 @@ const Header = ({ user, loggedIn }) => {
                     />
                   </picture>
                 </Link>
-                      
-                <div>
 
-                   <div className={`${css.menu_items} wallet-container`}>
-  <div class="wallet-balance">₹ {user && user.Wallet_balance !== undefined ? `${Math.floor(user.Wallet_balance)}` : '0'}</div>
-  <Link class="" to="/Addcase">
-    <img src="https://cdn-icons-png.flaticon.com/128/10336/10336627.png" width={"30px"} alt="" />
-  </Link>
-</div>
-              
-                  
+                <div>
+                  <div className={`${css.menu_items} wallet-container`}>
+                    <div class="wallet-balance">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/12740/12740855.png"
+                        width={"25px"}
+                        alt="" /> {" "}
+                      ₹{" "}
+                      {user && user.Wallet_balance !== undefined
+                        ? `${Math.floor(user.Wallet_balance)}`
+                        : "0"}
+                    </div>
+                    <Link class="" to="/Addcase">
+                      <img
+                        src="https://cdn-icons-png.flaticon.com/512/10307/10307926.png"
+                        width={"30px"}
+                        alt=""
+                      />
+                    </Link>
+                  </div>
+
                   {/* <div className={`${css.menu_items}`}>
                     <Link className={`${css.box}`} to="/Addcase">
                       <picture className={`${css.moneyIcon_container}`}>
@@ -431,15 +507,11 @@ const Header = ({ user, loggedIn }) => {
         </React.Fragment>
       ) : (
         <div className="w3-teal ">
-          <div className="w3-container "> 
+          <div className="w3-container ">
             <div className={`${css.headerContainer} justify-content-between`}>
               <Link to="/">
                 <picture className={`ml-2 ${css.navLogo} d-flex`}>
-                  <img
-                    src="/khelobuddy/logo.png"
-                    className="snip-img"
-                    alt=""
-                  />
+                  <img src="/khelobuddy/logo.png" className="snip-img" alt="" />
                 </picture>
               </Link>
 
