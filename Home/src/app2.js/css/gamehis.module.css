@@ -149,7 +149,7 @@ b {
   background-color: white; /* Background is gray by default */
   color: white; /* Text is white by default */
   border-radius: 12px;
-  padding: 2px 5px;
+  padding: 6px 42px;
   font-size: 0.9em;
   border: 1px solid black; /* Border color */
   text-decoration: none; /* Remove underline from links */
@@ -161,7 +161,7 @@ b {
   background-color: #0D6EFD; /* Background is gray by default */
   color: white; /* Text is white by default */
   border-radius: 12px;
-  padding: 2px 5px;
+  padding: 7px 30px;
   font-size: 0.9em;
   border: 1px solid #0D6EFD; /* Border color */
   text-decoration: none; /* Remove underline from links */
