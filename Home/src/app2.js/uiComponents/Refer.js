@@ -212,17 +212,17 @@ const Refer = () => {
                     <span
                       className="font-10"
                       style={{
-                        padding: "1px",
+                        padding: "1px 10px",
                         margin: "1px",
                         backgroundColor: "#28a745",
                         borderRadius: "4px",
                         color: "#fff",
-                        width: "80px",
+                        width: "60px",
                         display: "flex",
                         alignItems: "center",
                       }}
                     >
-                      <img
+                      {/* <img
                         height="18px"
                         width="18px"
                         src={
@@ -231,7 +231,8 @@ const Refer = () => {
                         }
                         alt=""
                         style={{ borderRadius: "5px" }}
-                      />
+                      /> */}
+                      ₹
                       &nbsp;
                       <b>
                         {user && user.referral_wallet !== undefined
