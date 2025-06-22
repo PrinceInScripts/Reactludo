@@ -478,15 +478,42 @@ export default function Landing() {
 
           
 
-           <section
-      className="footer"
-      style={{
-        backgroundColor: "#f8f9fa",
-        padding: "20px",
-        borderTop: "1px solid #e0e0e0",
-      }}
-    >
-      <a
+     <section
+            className="footer"
+            style={{
+              backgroundColor: "#f8f9fa",
+              padding: "20px",
+              borderTop: "1px solid #e0e0e0",
+            }}
+          >
+            <div class="footer-logo">
+              <picture className="icon">
+                <img
+                  src="/khelobuddy/logo.png"
+                  alt="khelobuddy Logo"
+                  style={{ width: "40px", height: "40px", borderRadius: "8px" }}
+                />
+              </picture>
+              <span>
+                Khelo<span class="highlight">Buddy</span>
+              </span>
+            </div>
+
+            <div style={{ padding: "0 20px", marginBottom: "20px" }}>
+              <p>
+                KheloBuddy is your go-to platform for all your gaming needs.
+                Join us and experience the thrill of gaming like never before!
+              </p>
+            </div>
+
+            <div className="footer-header" onClick={() => setOpen(!open)}>
+              <span className="footer-title">Privacy & Support</span>
+              <i className={`chevron ${open ? "up" : "down"}`}>
+                {open ? "▲" : "▼"}
+              </i>
+            </div>
+
+            {/* <a
         className="d-flex align-items-center px-3 py-3"
         href="#!"
         onClick={() => setOpen(!open)}
@@ -499,13 +526,7 @@ export default function Landing() {
           padding: "10px 0",
         }}
       >
-        <picture className="icon">
-          <img
-            src="/khelobuddy/logo.png"
-            alt="khelobuddy Logo"
-            style={{ width: "80px", height: "80px", borderRadius: "8px" }}
-          />
-        </picture>
+      
         <span
           style={{
             color: "#6c757d",
@@ -521,33 +542,31 @@ export default function Landing() {
           className={`mdi ${open ? 'mdi-chevron-up' : 'mdi-chevron-down'} ml-auto`}
           style={{ fontSize: "1.7em", color: "#6c757d" }}
         ></i>
-      </a>
+      </a> */}
 
-      <Collapse in={open}>
-        <div id="footer-collapse-text" className="px-3 overflow-hidden">
-          <div className="row footer-links mt-3">
-            <Link className="col-6 mb-2" to="/term-condition">
-              Terms & Conditions
-            </Link>
-            <Link className="col-6 mb-2" to="/PrivacyPolicy">
-              Privacy Policy
-            </Link>
-            <Link className="col-6 mb-2" to="/RefundPolicy">
-              Refund/Cancellation Policy
-            </Link>
-            <Link className="col-6 mb-2" to="/contact-us">
-              Contact Us
-            </Link>
-            <Link className="col-6 mb-2" to="/responsible-gaming">
-              Responsible Gaming
-            </Link>
-            <Link className="col-6 mb-2" to="/Rules">
-              Game Rules
-            </Link>
-          </div>
-        </div>
-      </Collapse>
-    </section>
+            <Collapse in={open}>
+              <div id="footer-collapse-text" className="footer-links-box">
+                <Link class="link" to="/term-condition">
+                  Terms & Conditions
+                </Link>
+                <Link class="link" to="/PrivacyPolicy">
+                  Privacy Policy
+                </Link>
+                <Link class="link" to="/RefundPolicy">
+                  Refund/Cancellation Policy
+                </Link>
+                <Link class="link" to="/contact-us">
+                  Contact Us
+                </Link>
+                <Link class="link" to="/responsible-gaming">
+                  Responsible Gaming
+                </Link>
+                <Link class="link" to="/Rules">
+                  Game Rules
+                </Link>
+              </div>
+            </Collapse>
+          </section>
 
           <ToastContainer
             style={{ marginBottom: "25px" }}

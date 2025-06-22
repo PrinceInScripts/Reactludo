@@ -103,7 +103,7 @@ const history = useHistory();
     }}>Legal Terms</div>
     
     <div id="example-collapse-text" className="px-3 overflow-hidden custom-div-padding">
-        <div className="row footer-links">
+        <div className="row footer-links" style={{ marginTop: "10px" }}>
             <Link className="col-12 col-md-6 mb-2" to="/term-condition">
                 <button className="btn btn-light btn-block btn-custom-padding font-weight-bold text-dark" style={{ 
                     border: '1px solid #ccc', 
@@ -157,23 +157,23 @@ const history = useHistory();
   <div className="card mt-2" style={{ border: '1px solid #ccc', width: '93%', margin: '0 auto', backgroundColor: '#f8f9fa', textAlign: 'center' }}>
   <div className="collapsible-card" onClick={() => setToggleTerms(!toggleTerms)} style={{ cursor: 'pointer' }}>
     <div className="header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px' }}>
-      <span className="center-bold-dark" style={{ fontSize: '12px', fontWeight: 'bold', color: '#666' }}>About us: Haryanaludo</span>
-      <span style={{ fontSize: '12px', color: 'grey', marginLeft: '10px' }}>Know more here</span>
+      <span className="center-bold-dark" style={{ fontSize: '16px', fontWeight: 'bold', color: '#000' }}>About us</span>
+      {/* <span style={{ fontSize: '12px', color: 'grey', marginLeft: '10px' }}>Know more here</span> */}
       <span>{toggleTerms ? '▲' : '▼'}</span>
     </div>
     <div className="content" style={{ display: toggleTerms ? 'block' : 'none', padding: '10px', backgroundColor: '#fff', animation: 'slideIn 0.5s forwards' }}>
       <div className="footer-text">
-        <p style={{ fontSize: '12px' }}>Haryanaludo is a real-money gaming product owned and operated by Haryanaludo Battle Pvt Ltd. ("We" or "Us" or "Our").</p>
+        <p style={{ fontSize: '12px' }}>Khelobuddy is a real-money gaming product owned and operated by Khelobuddy Battle Pvt Ltd. ("We" or "Us" or "Our").</p>
         <span className="footer-text-bold" style={{ fontSize: '12px', fontWeight: 'bold' }}>Our Business & Products</span>
         <p style={{ fontSize: '12px' }}>We are an HTML5 game-publishing company with a mission to make accessing games fast and easy by removing the friction of app-installs.</p>
-        <p style={{ fontSize: '12px' }}>Haryanaludo is a skill-based real-money gaming platform accessible only to users in India. Users can compete for real cash in Tournaments and Battles and encash their winnings via popular options such as Paytm Wallet, Amazon Pay, Bank Transfer, Mobile Recharges, etc.</p>
+        <p style={{ fontSize: '12px' }}>Khelobuddy is a skill-based real-money gaming platform accessible only to users in India. Users can compete for real cash in Tournaments and Battles and encash their winnings via popular options such as Paytm Wallet, Amazon Pay, Bank Transfer, Mobile Recharges, etc.</p>
         <span className="footer-text-bold" style={{ fontSize: '12px', fontWeight: 'bold' }}>Our Games</span>
-        <p style={{ fontSize: '12px' }}>Haryanaludo.com offers a wide variety of high-quality, premium HTML5 games optimized to work on low-end devices, uncommon browsers, and patchy internet speeds. Our games cover popular categories like Arcade, Action, Adventure, Sports & Racing, Strategy, Puzzle & Logic, and include multiplayer games such as Ludo, Chess, 8 Ball Pool, Carrom, Tic Tac Toe, Archery, Quiz, Chinese Checkers, and more!</p>
-        <p style={{ fontSize: '12px' }}>If you have any suggestions for new games or if you're a game developer interested in working with us, please reach out at <a href="mailto:support@Haryanaludo.com">support@Haryanaludo.com</a>.</p>
+        <p style={{ fontSize: '12px' }}>Khelobuddy.com offers a wide variety of high-quality, premium HTML5 games optimized to work on low-end devices, uncommon browsers, and patchy internet speeds. Our games cover popular categories like Arcade, Action, Adventure, Sports & Racing, Strategy, Puzzle & Logic, and include multiplayer games such as Ludo, Chess, 8 Ball Pool, Carrom, Tic Tac Toe, Archery, Quiz, Chinese Checkers, and more!</p>
+        <p style={{ fontSize: '12px' }}>If you have any suggestions for new games or if you're a game developer interested in working with us, please reach out at <a href="mailto:support@Khelobuddy.com">support@Khelobuddy.com</a>.</p>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10vh', marginTop: '10px' }}>
           <p style={{ color: '#e74c3c', fontSize: '12px', fontWeight: 'bold' }}>This game involves an element of financial risk and may be addictive. Please play responsibly at your own risk.</p>
         </div>
-        <p style={{ color: '#00008b', fontSize: '12px' }}>&copy; 2020 Haryana ludo Pvt Ltd. All rights reserved.</p>
+        <p style={{ color: '#00008b', fontSize: '12px' }}>&copy; 2020 Khelobuddy Pvt Ltd. All rights reserved.</p>
       </div>
     </div>
   </div>

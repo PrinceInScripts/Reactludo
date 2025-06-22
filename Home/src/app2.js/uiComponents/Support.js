@@ -125,7 +125,7 @@ const fetchData = async () => {
             <div className="col-md-6 mt-0" style={{ width: '50%' }}>
     <div className="card" style={{ backgroundColor: '#fff', border: '1px solid #000', borderRadius: '5px' }}>
                     <div className="card-body text-left">
-                        <a className="cxy flex-column" href="https://www.instagram.com/haryana_ludo.in" target="_blank" style={{ color: 'black', fontWeight: 'bold' }}>
+                        <a className="cxy flex-column" href="https://www.instagram.com/official_khelobuddy" target="_blank" style={{ color: 'black', fontWeight: 'bold' }}>
                             <img
                                 width="25px"
                                 src="https://i.postimg.cc/Y95w8k7p/instagram.png"
@@ -142,7 +142,7 @@ const fetchData = async () => {
             <div className="col-md-6 mt-2" style={{ width: '50%' }}>
     <div className="card" style={{ backgroundColor: '#fff', border: '1px solid #000', borderRadius: '5px' }}>
                     <div className="card-body text-right">
-                        <a className="cxy flex-column" href="https://t.me/haryana_ludoking" target="_blank" style={{ color: 'white', fontWeight: 'bold' }}>
+                        <a className="cxy flex-column" href="https://t.me/official_khelobuddy" target="_blank" style={{ color: 'white', fontWeight: 'bold' }}>
                             <img
                                 width="25px"
                                 src="https://i.postimg.cc/02qsw8Zn/Telegram.png"
@@ -165,7 +165,7 @@ const fetchData = async () => {
                                 className="mr-2"
                             />
                         <span className="font-9" style={{ color: 'black' }}>
-  {WebSitesettings.CompanyEmail || 'support@haryanaludo.com'}!
+  {WebSitesettings.CompanyEmail || 'support@khelobuddy.com'}!
 </span>
 
                         </a>
@@ -183,7 +183,7 @@ const fetchData = async () => {
    <div className="text-center font-9 mb-2">
           <div className="col-12 my-2 text-center font-weight-bold">
         <span className="footer-text-bold">
-  {WebSitesettings ? WebSitesettings.CompanyName || "haryanaludo Privat Limited." : ""}
+  {WebSitesettings ? WebSitesettings.CompanyName || "khelobuddy Private Limited." : ""}
 </span>
 &nbsp;&nbsp;
      {/* <span className="footer-text-bold">
