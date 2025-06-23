@@ -7,8 +7,15 @@ import { Link } from "react-router-dom";
 //import Rightcontainer from "../Components/Rightcontainer";
 import "../css/Loader.css";
 import Swal from "sweetalert2";
+import {
+  FaCheckCircle,
+  FaUsers,
+  FaShareAlt,
+  FaChevronRight,
+} from "react-icons/fa";
 // import findGif from "/";
 import Header from "../Components/Header";
+import { toast } from "react-toastify";
 
 const beckendLocalApiUrl = process.env.REACT_APP_BACKEND_LOCAL_API;
 const beckendLiveApiUrl = process.env.REACT_APP_BACKEND_LIVE_API;
@@ -23,6 +30,9 @@ const Addcase = ({ walletUpdate }) => {
   let method = useRef();
   let checkInterval;
   const [userAllData, setUserAllData] = useState();
+  const presets = [1000, 500, 100];
+  const addedPlayers = "1,67,670";
+  const referralCode = "ABCD1234";
 
   const [global, setGlobal] = useState(100);
   const [next, setNext] = useState(1);
@@ -53,19 +63,63 @@ const Addcase = ({ walletUpdate }) => {
   const [scrnshot1, setScrnshot1] = useState("");
   const [upiUtrNum, setupiUtrNum] = useState("");
 
+  const recommendedMethod = {
+    name: "Paytm UPI",
+    icon: "/paytmm-logo.png",
+    cashback:
+      "Get ₹10-200 assured cashback on deposit of ₹200 or more. Applicable once.",
+  };
+
+  const upiMethods = [
+    {
+      name: "Paytm",
+      icon: "/paytm-logo.png",
+      imgwidth: "100%",
+    },
+    {
+      name: "CRED",
+      icon: "/cred-logo.png",
+      imgwidth: "100%",
+    },
+    {
+      name: "Phonepe",
+      icon: "/phonepe-logo.png",
+      imgwidth: "24",
+    },
+    {
+      name: "Google Pay",
+      icon: "/google-pay-logo.jpg",
+      imgwidth: "24",
+    },
+    {
+      name: "Amazon Pay",
+      icon: "/amazon-pay-logo.png",
+      imgwidth: "24",
+    },
+  ];
+
   const handleChange = (e) => {
     setScrnshot1(URL.createObjectURL(e.target.files[0]));
     setScrnshot(e.target.files[0]);
   };
-  
-   const [isCopied, setIsCopied] = useState(false);
+
+  const [isCopied, setIsCopied] = useState(false);
+
+  const handleNext = () => {
+    if (global < 50) {
+      toast.error("Minimum deposit amount is ₹50");
+      return;
+    }
+    toast.success("Proceeding to payment options");
+    setNext(2);
+  };
 
   const handleCopy = () => {
     navigator.clipboard.writeText("ombk.aaev17465havrlcunww@mbk");
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 3000); // Reset alert after 3 seconds
   };
-  
+
   const ManualPayment = async (e) => {
     e.preventDefault();
     const access_token = localStorage.getItem("token");
@@ -428,113 +482,109 @@ const Addcase = ({ walletUpdate }) => {
 
   const [isProcessing, setIsProcessing] = useState(false);
 
-// UPI Gateway Deposit Function
-const depositUpiGateway = (channel, method, upiMethod, upigateway) => {
-  setProcess(true);
-  const access_token = localStorage.getItem("token");
-  const headers = {
-    Authorization: `Bearer ${access_token}`,
-  };
-  
-  axios
-    .post(
-      baseUrl + `user/depositeupi`,
-      {
-        amount: global,
-        channel: channel,
-        payment_method: method,
-        provider: walletOption,
-        bankCode: bankCode,
-        account_name: account_name,
-        account_mail_id: account_mail_id,
-        payment_gatway: upigateway,
-      },
-      { headers }
-    )
-    .then((res) => {
-      if (res.data.payment_url) {
-        let txnID = res.data.txnID;
-        let payment_url = res.data.payment_url;
+  // UPI Gateway Deposit Function
+  const depositUpiGateway = (channel, method, upiMethod, upigateway) => {
+    setProcess(true);
+    const access_token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+    };
 
-        // Open payment URL in new tab
-        window.open(payment_url, '_blank');
+    axios
+      .post(
+        baseUrl + `user/depositeupi`,
+        {
+          amount: global,
+          channel: channel,
+          payment_method: method,
+          provider: walletOption,
+          bankCode: bankCode,
+          account_name: account_name,
+          account_mail_id: account_mail_id,
+          payment_gatway: upigateway,
+        },
+        { headers }
+      )
+      .then((res) => {
+        if (res.data.payment_url) {
+          let txnID = res.data.txnID;
+          let payment_url = res.data.payment_url;
 
-        // Start checking payment status
-        setTimeout(() => {
-          checkUpiDepositStatus(txnID);
+          // Open payment URL in new tab
+          window.open(payment_url, "_blank");
+
+          // Start checking payment status
+          setTimeout(() => {
+            checkUpiDepositStatus(txnID);
+            setProcess(false);
+          }, 30000);
+        } else {
           setProcess(false);
-        }, 30000);
-      } else {
+          Swal.fire({
+            title: res.data.error || "Payment initiation failed",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        }
+      })
+      .catch((e) => {
         setProcess(false);
         Swal.fire({
-          title: res.data.error || "Payment initiation failed",
+          title: e.response?.data?.error || "Network Error",
           icon: "error",
           confirmButtonText: "OK",
         });
-      }
-    })
-    .catch((e) => {
-      setProcess(false);
-      Swal.fire({
-        title: e.response?.data?.error || "Network Error",
-        icon: "error",
-        confirmButtonText: "OK",
       });
-    });
-};
-
-// Check UPI Deposit Status
-const checkUpiDepositStatus = (txnID) => {
-  const access_token = localStorage.getItem("token");
-  const headers = {
-    Authorization: `Bearer ${access_token}`,
   };
-  
-  axios
-    .post(
-      baseUrl + `checkout/deposite/txn`,
-      { txnID: txnID },
-      { headers }
-    )
-    .then((res) => {
-      if (res.data.txnStatus === "PAID") {
-        Swal.fire({
-          title: "Deposit Successful!",
-          text: "Your amount has been credited to your wallet",
-          icon: "success",
-          confirmButtonText: "OK",
-        }).then(() => {
-          history.push("/landing");
+
+  // Check UPI Deposit Status
+  const checkUpiDepositStatus = (txnID) => {
+    const access_token = localStorage.getItem("token");
+    const headers = {
+      Authorization: `Bearer ${access_token}`,
+    };
+
+    axios
+      .post(baseUrl + `checkout/deposite/txn`, { txnID: txnID }, { headers })
+      .then((res) => {
+        if (res.data.txnStatus === "PAID") {
+          Swal.fire({
+            title: "Deposit Successful!",
+            text: "Your amount has been credited to your wallet",
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then(() => {
+            history.push("/landing");
+            window.location.reload();
+          });
+        } else if (res.data.txnStatus === "FAILED") {
+          Swal.fire({
+            title: "Transaction Failed",
+            text: res.data.msg || "Payment was not successful",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        } else {
+          // If still pending, check again after 30 seconds
+          setTimeout(() => {
+            checkUpiDepositStatus(txnID);
+          }, 30000);
+        }
+      })
+      .catch((e) => {
+        if (e.response?.status === 401) {
+          localStorage.removeItem("token");
           window.location.reload();
-        });
-      } else if (res.data.txnStatus === "FAILED") {
-        Swal.fire({
-          title: "Transaction Failed",
-          text: res.data.msg || "Payment was not successful",
-          icon: "error",
-          confirmButtonText: "OK",
-        });
-      } else {
-        // If still pending, check again after 30 seconds
-        setTimeout(() => {
-          checkUpiDepositStatus(txnID);
-        }, 30000);
-      }
-    })
-    .catch((e) => {
-      if (e.response?.status === 401) {
-        localStorage.removeItem('token');
-        window.location.reload();
-      } else {
-        Swal.fire({
-          title: "Error checking status",
-          text: "Please check your transaction history later",
-          icon: "warning",
-          confirmButtonText: "OK",
-        });
-      }
-    });
-};
+        } else {
+          Swal.fire({
+            title: "Error checking status",
+            text: "Please check your transaction history later",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
+        }
+      });
+  };
 
   //use for cashfree gatway
   const deposit = (channel, method, upiMethod) => {
@@ -725,166 +775,275 @@ const checkUpiDepositStatus = (txnID) => {
           {Boolean(!process) && (
             <div>
               {Boolean(next === 1) && (
-                <div className="px-4  py-5">
-                  <div className={`${css.games_section}`}>
-                    <div className="d-flex position-relative align-items-center">
-                      <div className={`${css.games_section_title}`}>
-                        Choose amount to add
-                      </div>
+                //                 <div className="px-4  py-5">
+                //                   <div className={`${css.games_section}`}>
+                //                     <div className="d-flex position-relative align-items-center">
+                //                       <div className={`${css.games_section_title}`}>
+                //                         Choose amount to add
+                //                       </div>
+                //                     </div>
+                //                   </div>
+                //                   <div className="pb-3">
+                //                     <div className="MultiFormControl_root mt-4 MuiFormControl-fullWidth">
+                //                       <div className="MuiFormControl_root MuiTextField-root">
+                //                         <label
+                //                           className={`${css.MuiFormLabel_root} MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink`}
+                //                           data-shrink="true"
+                //                           style={{ fontSize: "0.8rem", fontWeight: "400" }}
+                //                         >
+                //                           Enter Amount
+                //                         </label>
+                //                         <div className="MuiInputBase-root MuiInput-root MuiInput_underline jss58 MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedStart">
+                //                           <div className="MuiInputAdornment-root MuiInputAdornment-positionStart d-flex w-100">
+                //                             <div className="MuiInputAdornment-root MuiInputAdornment-positionStart d-flex align-items-center">
+                //                               <p className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary mt-auto">
+                //                                 ₹
+                //                               </p>
+                //                             </div>
+                //                             <input
+                //                               className={`w3-input input ${css.collapseCard_title} border-bottom text-dark`}
+                //                               type="tel"
+                //                               id="amountInput"
+                //                               style={{ width: "100%", fontSize: "2em" }}
+                //                               value={`${global}`}
+                //                               onChange={(e) => {
+                //                                 e.target.value > 0
+                //                                   ? e.target.value <= 10000
+                //                                     ? setGlobal(parseInt(e.target.value))
+                //                                     : setGlobal(10000)
+                //                                   : e.target.value < 0
+                //                                   ? setGlobal(50)
+                //                                   : setGlobal(0);
+                //                               }}
+                //                             ></input>
+                //                           </div>
+                //                         </div>
+                //                         <p className="MuiFormHelperText-root">
+                // 50, Max: 10000
+                //                         </p>
+                //                       </div>
+                //                     </div>
+                //                     <div className={`${css.games_window}`}>
+                //                       <div
+                //                         className={`${css.gameCard_container}`}
+                //                         onClick={() => {
+                //                           // console.log(100);
+                //                           setGlobal(100);
+                //                         }}
+                //                       >
+                //                         <div className={`${css.add_fund_box}`}>
+                //                           <div
+                //                             style={{ display: "flex", alignItems: "baseline" }}
+                //                           >
+                //                             <div
+                //                               className={`${css.collapseCard_title} mr-1`}
+                //                               style={{ fontSize: "0.9em" }}
+                //                             >
+                //                               ₹
+                //                             </div>
+                //                             <div
+                //                               className={`${css.collapseCard_title}`}
+                //                               style={{ fontSize: "1.5em" }}
+                //                             >
+                //                               100
+                //                             </div>
+                //                           </div>
+                //                         </div>
+                //                       </div>
+                //                       <div
+                //                         className={`${css.gameCard_container}`}
+                //                         onClick={() => {
+                //                           // console.log(250);
+                //                           setGlobal(250);
+                //                         }}
+                //                       >
+                //                         <div className={`${css.add_fund_box}`}>
+                //                           <div
+                //                             style={{ display: "flex", alignItems: "baseline" }}
+                //                           >
+                //                             <div
+                //                               className={`${css.collapseCard_title} mr-1`}
+                //                               style={{ fontSize: "0.9em" }}
+                //                             >
+                //                               ₹
+                //                             </div>
+                //                             <div
+                //                               className={`${css.collapseCard_title}`}
+                //                               style={{ fontSize: "1.5em" }}
+                //                             >
+                //                               250
+                //                             </div>
+                //                           </div>
+                //                         </div>
+                //                       </div>
+                //                       <div
+                //                         className={`${css.gameCard_container}`}
+                //                         onClick={() => {
+                //                           // console.log(500);
+                //                           setGlobal(500);
+                //                         }}
+                //                       >
+                //                         <div className={`${css.add_fund_box}`}>
+                //                           <div
+                //                             style={{ display: "flex", alignItems: "baseline" }}
+                //                           >
+                //                             <div
+                //                               className={`${css.collapseCard_title} mr-1`}
+                //                               style={{ fontSize: "0.9em" }}
+                //                             >
+                //                               ₹
+                //                             </div>
+                //                             <div
+                //                               className={`${css.collapseCard_title}`}
+                //                               style={{ fontSize: "1.5em" }}
+                //                             >
+                //                               500
+                //                             </div>
+                //                           </div>
+                //                         </div>
+                //                       </div>
+                //                       <div
+                //                         className={`${css.gameCard_container}`}
+                //                         onClick={() => {
+                //                           // console.log(1000);
+                //                           setGlobal(1000);
+                //                         }}
+                //                       >
+                //                         <div className={`${css.add_fund_box}`}>
+                //                           <div
+                //                             style={{ display: "flex", alignItems: "baseline" }}
+                //                           >
+                //                             <div
+                //                               className={`${css.collapseCard_title} mr-1`}
+                //                               style={{ fontSize: "0.9em" }}
+                //                             >
+                //                               ₹
+                //                             </div>
+                //                             <div
+                //                               className={`${css.collapseCard_title}`}
+                //                               style={{ fontSize: "1.5em" }}
+                //                             >
+                //                               1000
+                //                             </div>
+                //                           </div>
+                //                         </div>
+                //                       </div>
+                //                     </div>
+                //                   </div>
+                //                   <div className={`${css.refer_footer}`}>
+                //                     <div className="d-grid gap-2 col-12 mx-auto">
+                //                       <button
+                //                         type="button"
+                //                         className={`${css.block} bg-primary rounded text-white font-weight-bold text-uppercase`}
+                //                         onClick={() => {
+                //                           global >= 50
+                //                             ? setNext(2)
+                //                             : alert("Minimum deposit is 50");
+                //                         }}
+                //                       >
+                //                         Next
+                //                       </button>
+                //                     </div>
+                //                   </div>
+                //                 </div>
+                <div className="container px-4 py-3">
+                  {/* Enter Amount Card */}
+                  <div className={`${css.card} mb-4`}>
+                    <h2 className="mb-3">Enter Amount</h2>
+                    <div className={`${css.inputWrapper} mb-4`}>
+                      <span className={css.inputPrefix}>₹</span>
+                      <input
+                        type="number"
+                        className={css.amountInput}
+                        value={global}
+                        onChange={(e) => {
+                          const val = parseInt(e.target.value, 10) || 0;
+                          setGlobal(Math.max(0, Math.min(10000, val)));
+                        }}
+                      />
                     </div>
-                  </div>
-                  <div className="pb-3">
-                    <div className="MultiFormControl_root mt-4 MuiFormControl-fullWidth">
-                      <div className="MuiFormControl_root MuiTextField-root">
-                        <label
-                          className={`${css.MuiFormLabel_root} MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink`}
-                          data-shrink="true"
-                          style={{ fontSize: "0.8rem", fontWeight: "400" }}
+                    <div className="d-flex flex-wrap gap-2">
+                      {presets.map((p) => (
+                        <button
+                          key={p}
+                          className={`${css.presetBtn} mr-3 mb-2`}
+                          onClick={() => setGlobal(p)}
                         >
-                          Enter Amount
-                        </label>
-                        <div className="MuiInputBase-root MuiInput-root MuiInput_underline jss58 MuiInputBase-formControl MuiInput-formControl MuiInputBase-adornedStart">
-                          <div className="MuiInputAdornment-root MuiInputAdornment-positionStart d-flex w-100">
-                            <div className="MuiInputAdornment-root MuiInputAdornment-positionStart d-flex align-items-center">
-                              <p className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary mt-auto">
-                                ₹
-                              </p>
-                            </div>
-                            <input
-                              className={`w3-input input ${css.collapseCard_title} border-bottom text-dark`}
-                              type="tel"
-                              id="amountInput"
-                              style={{ width: "100%", fontSize: "2em" }}
-                              value={`${global}`}
-                              onChange={(e) => {
-                                e.target.value > 0
-                                  ? e.target.value <= 10000
-                                    ? setGlobal(parseInt(e.target.value))
-                                    : setGlobal(10000)
-                                  : e.target.value < 0
-                                  ? setGlobal(50)
-                                  : setGlobal(0);
-                              }}
-                            ></input>
-                          </div>
-                        </div>
-                        <p className="MuiFormHelperText-root">
-50, Max: 10000
-                        </p>
-                      </div>
-                    </div>
-                    <div className={`${css.games_window}`}>
-                      <div
-                        className={`${css.gameCard_container}`}
-                        onClick={() => {
-                          // console.log(100);
-                          setGlobal(100);
-                        }}
-                      >
-                        <div className={`${css.add_fund_box}`}>
-                          <div
-                            style={{ display: "flex", alignItems: "baseline" }}
-                          >
-                            <div
-                              className={`${css.collapseCard_title} mr-1`}
-                              style={{ fontSize: "0.9em" }}
-                            >
-                              ₹
-                            </div>
-                            <div
-                              className={`${css.collapseCard_title}`}
-                              style={{ fontSize: "1.5em" }}
-                            >
-                              100
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className={`${css.gameCard_container}`}
-                        onClick={() => {
-                          // console.log(250);
-                          setGlobal(250);
-                        }}
-                      >
-                        <div className={`${css.add_fund_box}`}>
-                          <div
-                            style={{ display: "flex", alignItems: "baseline" }}
-                          >
-                            <div
-                              className={`${css.collapseCard_title} mr-1`}
-                              style={{ fontSize: "0.9em" }}
-                            >
-                              ₹
-                            </div>
-                            <div
-                              className={`${css.collapseCard_title}`}
-                              style={{ fontSize: "1.5em" }}
-                            >
-                              250
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className={`${css.gameCard_container}`}
-                        onClick={() => {
-                          // console.log(500);
-                          setGlobal(500);
-                        }}
-                      >
-                        <div className={`${css.add_fund_box}`}>
-                          <div
-                            style={{ display: "flex", alignItems: "baseline" }}
-                          >
-                            <div
-                              className={`${css.collapseCard_title} mr-1`}
-                              style={{ fontSize: "0.9em" }}
-                            >
-                              ₹
-                            </div>
-                            <div
-                              className={`${css.collapseCard_title}`}
-                              style={{ fontSize: "1.5em" }}
-                            >
-                              500
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className={`${css.gameCard_container}`}
-                        onClick={() => {
-                          // console.log(1000);
-                          setGlobal(1000);
-                        }}
-                      >
-                        <div className={`${css.add_fund_box}`}>
-                          <div
-                            style={{ display: "flex", alignItems: "baseline" }}
-                          >
-                            <div
-                              className={`${css.collapseCard_title} mr-1`}
-                              style={{ fontSize: "0.9em" }}
-                            >
-                              ₹
-                            </div>
-                            <div
-                              className={`${css.collapseCard_title}`}
-                              style={{ fontSize: "1.5em" }}
-                            >
-                              1000
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                          ₹ {p}
+                        </button>
+                      ))}
                     </div>
                   </div>
+
+                  {/* Players Banner */}
+                  <div
+                    className={`${css.banner} d-flex align-items-center mb-4`}
+                  >
+                    <FaCheckCircle className="text-success me-2" />
+                    <span className="fw-semibold">
+                      {addedPlayers} Players added cash today
+                    </span>
+                  </div>
+
+                  {/* Refer & Earn */}
+                  <div
+                    className={`${css.card} mb-4 d-flex align-items-center justify-content-between`}
+                  >
+                    <div className="d-flex align-items-center">
+                      <picture
+                        className="me-5 d-flex align-items-center bg-primary p-1 rounded-circle"
+                        style={{ marginRight: "10px" }}
+                      >
+                        <img
+                          src="https://cdn-icons-png.flaticon.com/128/17027/17027831.png"
+                          alt="Share"
+                          className="me-3"
+                          width={40}
+                        />
+                      </picture>
+                      <div>
+                        <div style={{ fontWeight: 700 }}>Refer & Earn</div>
+                        <div className="fs-5 text-muted">
+                          {userAllData?.referral_code
+                            ? `Share your referral code: ${userAllData.referral_code}`
+                            : "No referral code available"}
+                        </div>
+                      </div>
+                    </div>
+                    <Link
+                      to="/refer"
+                      className="btn btn-primary text-white"
+                      style={{ fontWeight: 900, textDecoration: "none" }}
+                    >
+                      Share Now
+                    </Link>
+                  </div>
+
+                  {/* Safety Notice */}
+                  <div className="text-center text-success mb-4">
+                    <FaCheckCircle className="me-1" /> 100% safe & secure
+                  </div>
+
+                  {/* Add Cash CTA */}
+                  {/* <div className="d-grid">
+                    <button
+                      className="btn btn-warning btn-lg text-dark fw-bold rounded-pill"
+                      onClick={handleNext}
+                    >
+                      Add Cash
+                    </button>
+                  </div> */}
+
                   <div className={`${css.refer_footer}`}>
                     <div className="d-grid gap-2 col-12 mx-auto">
                       <button
                         type="button"
-                        className={`${css.block} bg-primary rounded text-white font-weight-bold text-uppercase`}
+                        className={`${css.block} bg-primary text-white font-weight-bold text-uppercase`}
+                        style={{
+                          fontSize: "1.2em",
+                          borderRadius: "30px",
+                          fontWeight: "bold",
+                        }}
                         onClick={() => {
                           global >= 50
                             ? setNext(2)
@@ -899,651 +1058,832 @@ const checkUpiDepositStatus = (txnID) => {
               )}
 
               {Boolean(next === 2) && (
-                <div className="px-4 py-3">
-                  <div className="pb-3">
-                    <div className={`${css.games_section}`}>
-                      <div className="d-flex position-relative align-items-center justify-content-between">
-                        <div
-                          className={`${css.games_section_title}`}
-                          style={{ fontSize: "1.1em" }}
-                        >
-                          Amount to be added ₹<span>{global}</span>
+                //   <div className="px-4 py-3">
+                //     <div className="pb-3">
+                //       <div className={`${css.games_section}`}>
+                //         <div className="d-flex position-relative align-items-center justify-content-between">
+                //           <div
+                //             className={`${css.games_section_title}`}
+                //             style={{ fontSize: "1.1em" }}
+                //           >
+                //             Amount to be added ₹<span>{global}</span>
+                //           </div>
+                //           <button
+                //             type="button"
+                //             onClick={() => setNext(1)}
+                //             className="btn btn-primary text-white font-weight-bold text-uppercase px-2 py-1"
+                //           >
+                //             Edit
+                //           </button>
+                //         </div>
+                //       </div>
+                //     </div>
+                //     <div
+                //       style={{
+                //         background: "rgb(241, 241, 241)",
+                //         width: "100%",
+                //         height: "10px",
+                //         position: "absolute",
+                //         left: "0",
+                //         right: "0",
+                //       }}
+                //     ></div>
+                //     <div className="d-flex flex-column mt-4">
+                //       <div className="games-section-title">Pay Through UPI</div>
+
+                //       {/* Boolean(isUpiGatewayActive) &&
+                // <div>
+                // <label htmlFor="username " className="mr-5">
+                //     <i className="far fa-bank mr-2"></i>Account holder name
+                //   </label>
+                //   <div className="col-12 mb-3 p-0">
+                //     <input
+                //       type="text"
+                //       className="form-control"
+                //       id="account_name"
+                //       placeholder="Enter Account Name"
+                //       name="acname"
+                //       value={account_name}
+                //       onChange={(e) => setAccount_name(e.target.value)}
+                //       required
+                //     />
+                //   </div>
+
+                //   <label htmlFor="username " className="mr-5">
+                //     <i className="far fa-bank mr-2"></i>Enter Your Mail ID
+                //   </label>
+                //   <div className="col-12 mb-3 p-0">
+                //     <input
+                //       type="text"
+                //       className="form-control"
+                //       id="account_mail_id"
+                //       placeholder="Enter Your Mail ID"
+                //       name="mailid"
+                //       value={account_mail_id}
+                //       onChange={(e) => setAccount_mail_id(e.target.value)}
+                //       required
+                //     />
+                //   </div>
+                //     </div> */}
+
+                //       {Boolean(isUpiGatewayActive) && (
+                //         <div
+                //           onClick={() => {
+                //             method.current = "upipay";
+                //             depositUpiGateway(
+                //               "link",
+                //               "upi",
+                //               "upipay",
+                //               "upigateway"
+                //             );
+                //           }}
+                //           className="add-fund-box mt-3"
+                //           style={{ paddingTop: "0px", height: "60px" }}
+                //         >
+                //           <div
+                //             className="d-flex align-items-center"
+                //             style={{
+                //               backgroundColor: "#fafafa",
+                //               border: "1px solid #e0e0e0",
+                //               borderRadius: "7px",
+                //             }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{
+                //                 height: "60px",
+                //                 display: "flex",
+                //                 textAlign: "center",
+                //               }}
+                //             >
+                //               <img
+                //                 width="40px"
+                //                 src="UPI.png"
+                //                 alt=""
+                //                 style={{
+                //                   marginLeft: "7px",
+                //                   paddingBottom: "10px",
+                //                   paddingLeft: "3px",
+                //                   paddingTop: "5px",
+                //                 }}
+                //               />
+                //             </div>
+                //             <div className="d-flex justify-content-center flex-column ml-4">
+                //               <div className="jss30">
+                //                 <strong>Paynow Upi</strong>
+                //               </div>
+                //               <div className="jss31"></div>
+                //             </div>
+                //           </div>
+                //         </div>
+                //       )}
+
+                //       <br />
+                //       <div
+                //         className="card mt-2"
+                //         style={{
+                //           border: "1px solid rgb(128, 128, 128)",
+                //           width: "100%",
+                //           margin: "0 auto",
+                //           boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.5)",
+                //           backgroundColor: "#ffffff",
+                //         }}
+                //       >
+                //         <div
+                //           className={`card-body ${css.cardBody}`}
+                //           style={{
+                //             padding: "8px",
+                //             fontSize: "11px",
+                //             lineHeight: "1.3",
+                //             color: "#333",
+                //           }}
+                //         >
+                //           <p style={{ margin: "0 0 6px 0", fontSize: "11px" }}>
+                //             <strong>
+                //               2,000 से ऊपर का amount ID में add करने के लिए, नीचे
+                //               दिए गए UPI ID को copy करें और Paytm, PhonePe या GPay
+                //               से payment करें।
+                //             </strong>
+                //           </p>
+                //           <div
+                //             className={css.upiContainer}
+                //             style={{
+                //               display: "flex",
+                //               alignItems: "center",
+                //               justifyContent: "space-between",
+                //               backgroundColor: "#fff",
+                //               padding: "8px",
+                //               borderRadius: "6px",
+                //               boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+                //               marginBottom: "8px",
+                //             }}
+                //           >
+                //             <span
+                //               style={{ fontSize: "11px", fontWeight: "bold" }}
+                //             >
+                //               ombk.aaev17465havrlcunww@mbk
+                //             </span>
+                //             <button
+                //               onClick={handleCopy}
+                //               className={css.copyButton}
+                //               style={{
+                //                 border: "none",
+                //                 backgroundColor: "#007BFF",
+                //                 color: "#fff",
+                //                 padding: "4px 10px",
+                //                 borderRadius: "4px",
+                //                 cursor: "pointer",
+                //                 fontSize: "10px",
+                //                 fontWeight: "bold",
+                //               }}
+                //             >
+                //               Copy
+                //             </button>
+                //           </div>
+                //           {isCopied && (
+                //             <div
+                //               style={{
+                //                 marginTop: "8px",
+                //                 padding: "8px",
+                //                 backgroundColor: "#d4edda",
+                //                 color: "#155724",
+                //                 border: "1px solid #c3e6cb",
+                //                 borderRadius: "6px",
+                //                 textAlign: "center",
+                //                 fontSize: "11px",
+                //                 fontWeight: "bold",
+                //                 boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+                //               }}
+                //             >
+                //               UPI ID copied successfully!
+                //             </div>
+                //           )}
+                //           <p style={{ margin: "6px 0", fontSize: "11px" }}>
+                //             Payment करने के बाद, WhatsApp पर अपना payment
+                //             screenshot और username भेजें। आपकी amount तुरंत ID में
+                //             add कर दी जाएगी:
+                //           </p>
+                //           <a
+                //             href="https://wa.me/9812609786"
+                //             target="_blank"
+                //             rel="noopener noreferrer"
+                //             className={css.whatsappButton}
+                //             style={{
+                //               display: "block",
+                //               padding: "8px",
+                //               backgroundColor: "#25D366",
+                //               color: "#fff",
+                //               borderRadius: "5px",
+                //               textAlign: "center",
+                //               textDecoration: "none",
+                //               fontWeight: "bold",
+                //               fontSize: "11px",
+                //             }}
+                //           >
+                //             <span style={{ color: "#fff", fontWeight: "bold" }}>
+                //               <b>Message on WhatsApp</b>
+                //             </span>
+                //           </a>
+                //         </div>
+                //       </div>
+
+                //       {Boolean(isRazorPayActive) && (
+                //         <div
+                //           onClick={() => {
+                //             method.current = "upipay";
+                //             displayRazorpayPaymentSdk(
+                //               "link",
+                //               "upi",
+                //               "upipay",
+                //               "razorpay"
+                //             );
+                //           }}
+                //           className="add-fund-box mt-3"
+                //           style={{ paddingTop: "0px", height: "60px" }}
+                //         >
+                //           <div
+                //             className="d-flex align-items-center"
+                //             style={{
+                //               backgroundColor: "#fafafa",
+                //               border: "1px solid #e0e0e0",
+                //               borderRadius: "7px",
+                //             }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{
+                //                 height: "60px",
+                //                 display: "flex",
+                //                 textAlign: "center",
+                //               }}
+                //             >
+                //               <img
+                //                 width="40px"
+                //                 src="UPI.png"
+                //                 alt=""
+                //                 style={{
+                //                   marginLeft: "7px",
+                //                   paddingBottom: "10px",
+                //                   paddingLeft: "3px",
+                //                   paddingTop: "5px",
+                //                 }}
+                //               />
+                //             </div>
+                //             <div className="d-flex justify-content-center flex-column ml-4">
+                //               <div className="jss30">
+                //                 <strong>Deposit Here</strong>
+                //               </div>
+                //               <div className="jss31"></div>
+                //             </div>
+                //           </div>
+                //         </div>
+                //       )}
+
+                //       {Boolean(isPhonePeActive) && (
+                //         <div
+                //           onClick={() => {
+                //             method.current = "upipay";
+                //             phonePeDepositeUpi(
+                //               "link",
+                //               "upi",
+                //               "upipay",
+                //               "Phonepe"
+                //             );
+                //           }}
+                //           className="add-fund-box mt-3"
+                //           style={{ paddingTop: "0px", height: "60px" }}
+                //         >
+                //           <div
+                //             className="d-flex align-items-center"
+                //             style={{
+                //               backgroundColor: "#fafafa",
+                //               border: "1px solid #e0e0e0",
+                //               borderRadius: "7px",
+                //             }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{
+                //                 height: "60px",
+                //                 display: "flex",
+                //                 textAlign: "center",
+                //               }}
+                //             >
+                //               <img
+                //                 width="40px"
+                //                 src="UPI.png"
+                //                 alt=""
+                //                 style={{
+                //                   marginLeft: "7px",
+                //                   paddingBottom: "10px",
+                //                   paddingLeft: "3px",
+                //                   paddingTop: "5px",
+                //                 }}
+                //               />
+                //             </div>
+                //             <div className="d-flex justify-content-center flex-column ml-4">
+                //               <div className="jss30">
+                //                 <strong>Deposit PhonePe</strong>
+                //               </div>
+                //               <div className="jss31"></div>
+                //             </div>
+                //           </div>
+                //         </div>
+                //       )}
+
+                //       {Boolean(isDecentroActive) && (
+                //         <div
+                //           onClick={() => {
+                //             method.current = "upipay";
+                //             decentroDepositeUpi(
+                //               "link",
+                //               "upi",
+                //               "upipay",
+                //               "decentropay"
+                //             );
+                //           }}
+                //           className="add-fund-box mt-3"
+                //           style={{ paddingTop: "0px", height: "60px" }}
+                //         >
+                //           <div
+                //             className="d-flex align-items-center"
+                //             style={{
+                //               backgroundColor: "#fafafa",
+                //               border: "1px solid #e0e0e0",
+                //               borderRadius: "7px",
+                //             }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{
+                //                 height: "60px",
+                //                 display: "flex",
+                //                 textAlign: "center",
+                //               }}
+                //             >
+                //               <img
+                //                 width="40px"
+                //                 src="UPI.png"
+                //                 alt=""
+                //                 style={{
+                //                   marginLeft: "7px",
+                //                   paddingBottom: "10px",
+                //                   paddingLeft: "3px",
+                //                   paddingTop: "5px",
+                //                 }}
+                //               />
+                //             </div>
+                //             <div className="d-flex justify-content-center flex-column ml-4 mb-5">
+                //               <div className="jss30">
+                //                 <strong>Desposit Now</strong>
+                //               </div>
+                //               <div className="jss31"></div>
+                //             </div>
+                //           </div>
+                //         </div>
+                //       )}
+
+                //       {Boolean(isManualPaymentActive) && (
+                //         <div className="m-2">
+                //           <img
+                //             src={baseUrl + isManualUPIQR}
+                //             style={{ width: "100%" }}
+                //             alt="img"
+                //           />
+                //         </div>
+                //       )}
+                //       {Boolean(isManualPaymentActive) && (
+                //         <form
+                //           onSubmit={ManualPayment}
+                //           method="POST"
+                //           encType="multipart/form-data"
+                //         >
+                //           <label htmlFor="username " className="mr-5">
+                //             <i className="far fa-bank mr-2"></i>Enter UTR Number
+                //           </label>
+                //           <div className="col-12 mb-3 p-0">
+                //             <input
+                //               type="text"
+                //               className="form-control"
+                //               id="referenceId"
+                //               placeholder="Enter UTR Number"
+                //               name="referenceId"
+                //               value={upiUtrNum}
+                //               onChange={(e) => setupiUtrNum(e.target.value)}
+                //               required
+                //             />
+                //           </div>
+
+                //           <div
+                //             className="add-fund-box mt-3"
+                //             style={{ paddingTop: "0px", height: "60px" }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{
+                //                 backgroundColor: "#fafafa",
+                //                 border: "1px solid #e0e0e0",
+                //                 borderRadius: "7px",
+                //               }}
+                //             >
+                //               <div
+                //                 className="d-flex align-items-center"
+                //                 style={{ textAlign: "center" }}
+                //               >
+                //                 <img
+                //                   width="40px"
+                //                   src="UPI.png"
+                //                   alt=""
+                //                   style={{
+                //                     marginLeft: "7px",
+                //                     paddingBottom: "10px",
+                //                     paddingLeft: "3px",
+                //                     paddingTop: "5px",
+                //                   }}
+                //                 />
+                //               </div>
+                //               <div className="d-flex justify-content-center flex-column ml-4">
+                //                 <div className="jss30">
+                //                   <strong>Upload Screenshot</strong>
+                //                 </div>
+                //                 <div className="jss31">
+                //                   <input
+                //                     type="file"
+                //                     name="Screenshot"
+                //                     onChange={handleChange}
+                //                     accept="image/*"
+                //                   />
+                //                 </div>
+                //               </div>
+                //             </div>
+                //           </div>
+
+                //           <div className=" m-2 text-center">
+                //             <button type="submit" className="btn btn-success">
+                //               Submit
+                //             </button>
+                //           </div>
+
+                //           <div style={{ width: "100%", height: "400px" }}>
+                //             <img src={scrnshot1} style={{ width: "100%" }} />
+                //           </div>
+                //         </form>
+                //       )}
+
+                //       {Boolean(isMobile) && Boolean(isCashFreeActive) && (
+                //         <div>
+                //           <div
+                //             onClick={() => {
+                //               method.current = "gpay";
+                //               deposit("link", "upi", "gpay");
+                //             }}
+                //             className="add-fund-box mt-3"
+                //             style={{ paddingTop: "0px", height: "60px" }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{
+                //                 backgroundColor: "#fafafa",
+                //                 border: "1px solid #e0e0e0",
+                //                 borderRadius: "7px",
+                //               }}
+                //             >
+                //               <div
+                //                 className="d-flex align-items-center"
+                //                 style={{
+                //                   height: "60px",
+                //                   display: "flex",
+                //                   textAlign: "center",
+                //                 }}
+                //               >
+                //                 <img
+                //                   width="40px"
+                //                   src="gpay-logo.png"
+                //                   alt=""
+                //                   style={{
+                //                     marginLeft: "7px",
+                //                     paddingBottom: "10px",
+                //                     paddingLeft: "3px",
+                //                     paddingTop: "5px",
+                //                   }}
+                //                 />
+                //               </div>
+                //               <div className="d-flex justify-content-center flex-column ml-4">
+                //                 <div className="jss30">
+                //                   <strong>G-Pay</strong>
+                //                 </div>
+                //                 <div className="jss31"></div>
+                //               </div>
+                //             </div>
+                //           </div>
+
+                //           <div
+                //             onClick={() => {
+                //               method.current = "phonepe";
+                //               deposit("link", "upi", "phonepe");
+                //             }}
+                //             className="add-fund-box mt-3"
+                //             style={{ paddingTop: "0px", height: "60px" }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{
+                //                 backgroundColor: "#fafafa",
+                //                 border: "1px solid #e0e0e0",
+                //                 borderRadius: "7px",
+                //               }}
+                //             >
+                //               <div
+                //                 className="d-flex align-items-center"
+                //                 style={{
+                //                   height: "60px",
+                //                   display: "flex",
+                //                   textAlign: "center",
+                //                 }}
+                //               >
+                //                 <img
+                //                   width="40px"
+                //                   src="/phonepe-logo.png"
+                //                   alt=""
+                //                   style={{
+                //                     marginLeft: "7px",
+                //                     paddingBottom: "10px",
+                //                     paddingLeft: "3px",
+                //                     paddingTop: "5px",
+                //                   }}
+                //                 />
+                //               </div>
+                //               <div className="d-flex justify-content-center flex-column ml-4">
+                //                 <div className="jss30">
+                //                   <strong>PhonePe</strong>
+                //                 </div>
+                //                 <div className="jss31"></div>
+                //               </div>
+                //             </div>
+                //           </div>
+                //           <div
+                //             onClick={() => {
+                //               method.current = "paytm";
+                //               deposit("link", "upi", "paytm");
+                //             }}
+                //             className="add-fund-box mt-3"
+                //             style={{ paddingTop: "0px", height: "60px" }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{
+                //                 backgroundColor: "#fafafa",
+                //                 border: "1px solid #e0e0e0",
+                //                 borderRadius: "7px",
+                //               }}
+                //             >
+                //               <div
+                //                 className="d-flex align-items-center"
+                //                 style={{
+                //                   height: "60px",
+                //                   display: "flex",
+                //                   textAlign: "center",
+                //                 }}
+                //               >
+                //                 <img
+                //                   width="40px"
+                //                   src="/paytm-logo.png"
+                //                   alt=""
+                //                   style={{
+                //                     marginLeft: "7px",
+                //                     paddingBottom: "10px",
+                //                     paddingLeft: "3px",
+                //                     paddingTop: "5px",
+                //                   }}
+                //                 />
+                //               </div>
+                //               <div className="d-flex justify-content-center flex-column ml-4">
+                //                 <div className="jss30">
+                //                   <strong>Paytm UPI</strong>
+                //                 </div>
+                //                 <div className="jss31"></div>
+                //               </div>
+                //             </div>
+                //           </div>
+                //         </div>
+                //       )}
+                //       {Boolean(!isMobile) && Boolean(isCashFreeActive) && (
+                //         <div
+                //           className="add-fund-box mt-3"
+                //           onClick={() => {
+                //             deposit("qrcode", "upi");
+                //           }}
+                //           style={{ paddingTop: "0px", height: "60px" }}
+                //         >
+                //           <div
+                //             className="d-flex align-items-center"
+                //             style={{
+                //               backgroundColor: "#fafafa",
+                //               border: "1px solid #e0e0e0",
+                //               borderRadius: "7px",
+                //             }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{ height: "60px" }}
+                //             >
+                //               <img
+                //                 width="45px"
+                //                 src="/qr-scan.png"
+                //                 alt=""
+                //                 style={{
+                //                   marginLeft: "7px",
+                //                   paddingLeft: "3px",
+                //                 }}
+                //               />
+                //             </div>
+                //             <div className="d-flex justify-content-center flex-column ml-4">
+                //               <div className="jss30">
+                //                 <strong>Scan QR Code</strong>
+                //               </div>
+                //               <div className="jss31"></div>
+                //             </div>
+                //           </div>
+                //         </div>
+                //       )}
+                //       {Boolean(isCashFreeActive) && (
+                //         <div className="games-section-title mt-3">
+                //           Other Options
+                //         </div>
+                //       )}
+
+                //       {Boolean(isCashFreeActive) && (
+                //         <div
+                //           className="add-fund-box mt-3"
+                //           onClick={() => {
+                //             setNext(4);
+                //           }}
+                //           style={{ paddingTop: "0px", height: "60px" }}
+                //         >
+                //           <div
+                //             className="d-flex align-items-center"
+                //             style={{
+                //               backgroundColor: "#fafafa",
+                //               border: "1px solid #e0e0e0",
+                //               borderRadius: "7px",
+                //             }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{ height: "60px" }}
+                //             >
+                //               <img
+                //                 width="45px"
+                //                 src="all-wallets.png"
+                //                 alt=""
+                //                 style={{
+                //                   marginLeft: "7px",
+                //                   paddingBottom: "10px",
+                //                   paddingLeft: "3px",
+                //                   paddingTop: "5px",
+                //                 }}
+                //               />
+                //             </div>
+                //             <div className="d-flex justify-content-center flex-column ml-4">
+                //               <div className="jss30">
+                //                 <strong>Other Wallets</strong>
+                //               </div>
+                //               <div className="jss31"></div>
+                //             </div>
+                //           </div>
+                //         </div>
+                //       )}
+                //       {Boolean(isCashFreeActive) && (
+                //         <div
+                //           className="add-fund-box mt-3"
+                //           onClick={() => {
+                //             setNext(5);
+                //           }}
+                //           style={{ paddingTop: "0px", height: "60px" }}
+                //         >
+                //           <div
+                //             className="d-flex align-items-center"
+                //             style={{
+                //               backgroundColor: "#fafafa",
+                //               border: "1px solid #e0e0e0",
+                //               borderRadius: "7px",
+                //             }}
+                //           >
+                //             <div
+                //               className="d-flex align-items-center"
+                //               style={{ height: "60px" }}
+                //             >
+                //               <img
+                //                 width="45px"
+                //                 src="/bank1.png"
+                //                 alt=""
+                //                 style={{
+                //                   marginLeft: "7px",
+                //                   paddingBottom: "10px",
+                //                   paddingLeft: "3px",
+                //                   paddingTop: "5px",
+                //                 }}
+                //               />
+                //             </div>
+                //             <div className="d-flex justify-content-center flex-column ml-4">
+                //               <div className="jss30">
+                //                 <strong>Net Banking</strong>
+                //               </div>
+                //               <div className="jss31"></div>
+                //             </div>
+                //           </div>
+                //         </div>
+                //       )}
+                //     </div>
+                //   </div>
+                <div className="container px-4 py-5">
+                  <h2
+                    className="mb-4"
+                    style={{ fontFamily: "math", fontWeight: "bold" }}
+                  >
+                    Payment Options
+                  </h2>
+
+                  {/* Amount Card */}
+                  <div className={`${css.card} mb-4`}>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div>
+                        <div className="fw-semibold">
+                          Amount to pay{" "}
+                          <span
+                            className="text-muted"
+                            style={{ fontSize: "0.9rem" }}
+                          >
+                            (Inclusive of GST)
+                          </span>
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => setNext(1)}
-                          className="btn btn-primary text-white font-weight-bold text-uppercase px-2 py-1"
-                        >
-                          Edit
-                        </button>
+                      </div>
+                      <div className="fs-4 text-success fw-bold">
+                        +₹{global}
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center text-success mt-2">
+                      <FaCheckCircle className="me-2" /> 100% safe &amp; secure
+                    </div>
+                  </div>
+
+                  {/* Recommended Section */}
+                  <div className="mb-3">
+                    <h5 className="mb-2">Recommended</h5>
+                    <div className={`${css.card} p-3 mb-4`}>
+                      <div
+                        className={`${css.card} d-flex justify-content-between align-items-center`}
+                      >
+                        <div className="d-flex align-items-center">
+                          <div className="d-flex align-items-center">
+                            <img
+                              src={recommendedMethod.icon}
+                              alt=""
+                              className="me-3"
+                              style={{ width: 40, height: 24 }}
+                            />
+                            &nbsp;&nbsp;
+                            <div className="fw-bold">
+                              {recommendedMethod.name}
+                            </div>
+                          </div>
+
+                          <div></div>
+                        </div>
+                        <FaChevronRight className="text-muted" />
+                      </div>
+                      <div className="text-success mt-2 small">
+                        {recommendedMethod.cashback}
                       </div>
                     </div>
                   </div>
-                  <div
-                    style={{
-                      background: "rgb(241, 241, 241)",
-                      width: "100%",
-                      height: "10px",
-                      position: "absolute",
-                      left: "0",
-                      right: "0",
-                    }}
-                  ></div>
-                  <div className="d-flex flex-column mt-4">
-                    <div className="games-section-title">Pay Through UPI</div>
 
-                    {/* Boolean(isUpiGatewayActive) &&
-              <div>
-              <label htmlFor="username " className="mr-5">
-                  <i className="far fa-bank mr-2"></i>Account holder name
-                </label>
-                <div className="col-12 mb-3 p-0">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="account_name"
-                    placeholder="Enter Account Name"
-                    name="acname"
-                    value={account_name}
-                    onChange={(e) => setAccount_name(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <label htmlFor="username " className="mr-5">
-                  <i className="far fa-bank mr-2"></i>Enter Your Mail ID
-                </label>
-                <div className="col-12 mb-3 p-0">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="account_mail_id"
-                    placeholder="Enter Your Mail ID"
-                    name="mailid"
-                    value={account_mail_id}
-                    onChange={(e) => setAccount_mail_id(e.target.value)}
-                    required
-                  />
-                </div>
-                  </div> */}
-
-                    {Boolean(isUpiGatewayActive) && (
-                      <div
-                        onClick={() => {
-                          method.current = "upipay";
-                          depositUpiGateway(
-                            "link",
-                            "upi",
-                            "upipay",
-                            "upigateway"
-                          );
-                        }}
-                        className="add-fund-box mt-3"
-                        style={{ paddingTop: "0px", height: "60px" }}
-                      >
-                        <div
-                          className="d-flex align-items-center"
-                          style={{
-                            backgroundColor: "#fafafa",
-                            border: "1px solid #e0e0e0",
-                            borderRadius: "7px",
-                          }}
+                  {/* UPI Section */}
+                  <div className="mb-3">
+                    <h5 className="mb-1">UPI</h5>
+                    <div className="text-danger small mb-2">
+                      Avoid using Indian Post Bank! Facing high failure
+                    </div>
+                    <div>
+                      {upiMethods.map((m, idx) => (
+                        <button
+                          key={idx}
+                          className={`d-flex justify-content-between align-items-center ${css.upiItem}`}
+                          // onClick={() => onSelect(m.name)}
                         >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              height: "60px",
-                              display: "flex",
-                              textAlign: "center",
-                            }}
-                          >
+                          <div className="d-flex align-items-center">
                             <img
-                              width="40px"
-                              src="UPI.png"
+                              src={m.icon}
                               alt=""
-                              style={{
-                                marginLeft: "7px",
-                                paddingBottom: "10px",
-                                paddingLeft: "3px",
-                                paddingTop: "5px",
-                              }}
+                              className="me-3"
+                              style={{ width: `${m.imgwidth}`, height: 24 , borderRadius: m.name=="CRED" ? "20px" : "0px"}}
                             />
+                            &nbsp;&nbsp;<span>{m.name}</span>
                           </div>
-                          <div className="d-flex justify-content-center flex-column ml-4">
-                            <div className="jss30">
-                              <strong>Paynow Upi</strong>
-                            </div>
-                            <div className="jss31"></div>
-                          </div>
-                        </div>
-              
-                      </div>
-                    )}
-              
-                  <br />
-<div className="card mt-2" style={{border: '1px solid rgb(128, 128, 128)', width: '100%', margin: '0 auto', boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.5)', backgroundColor: '#ffffff'}}>
- 
-  <div className={`card-body ${css.cardBody}`} style={{ padding: "8px", fontSize: "11px", lineHeight: "1.3", color: "#333" }}>
-    <p style={{ margin: "0 0 6px 0", fontSize: "11px" }}><strong>2,000 से ऊपर का amount ID में add करने के लिए, नीचे दिए गए UPI ID को copy करें और Paytm, PhonePe या GPay से payment करें।</strong></p>
-    <div className={css.upiContainer} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", backgroundColor: "#fff", padding: "8px", borderRadius: "6px", boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)", marginBottom: "8px" }}>
-      <span style={{ fontSize: "11px", fontWeight: "bold" }}>ombk.aaev17465havrlcunww@mbk</span>
-      <button onClick={handleCopy} className={css.copyButton} style={{ border: "none", backgroundColor: "#007BFF", color: "#fff", padding: "4px 10px", borderRadius: "4px", cursor: "pointer", fontSize: "10px", fontWeight: "bold" }}>Copy</button>
-    </div>
-    {isCopied && (<div style={{ marginTop: "8px", padding: "8px", backgroundColor: "#d4edda", color: "#155724", border: "1px solid #c3e6cb", borderRadius: "6px", textAlign: "center", fontSize: "11px", fontWeight: "bold", boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)" }}>UPI ID copied successfully!</div>)}
-    <p style={{ margin: "6px 0", fontSize: "11px" }}>Payment करने के बाद, WhatsApp पर अपना payment screenshot और username भेजें। आपकी amount तुरंत ID में add कर दी जाएगी:</p>
-    <a href="https://wa.me/9812609786" target="_blank" rel="noopener noreferrer" className={css.whatsappButton} style={{ display: "block", padding: "8px", backgroundColor: "#25D366", color: "#fff", borderRadius: "5px", textAlign: "center", textDecoration: "none", fontWeight: "bold", fontSize: "11px" }}>
-      <span style={{ color: '#fff', fontWeight: 'bold' }}><b>Message on WhatsApp</b></span>
-    </a>
-  </div>
-</div>
-
-                    {Boolean(isRazorPayActive) && (
-                      <div
-                        onClick={() => {
-                          method.current = "upipay";
-                          displayRazorpayPaymentSdk(
-                            "link",
-                            "upi",
-                            "upipay",
-                            "razorpay"
-                          );
-                        }}
-                        className="add-fund-box mt-3"
-                        style={{ paddingTop: "0px", height: "60px" }}
-                      >
-                        <div
-                          className="d-flex align-items-center"
-                          style={{
-                            backgroundColor: "#fafafa",
-                            border: "1px solid #e0e0e0",
-                            borderRadius: "7px",
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              height: "60px",
-                              display: "flex",
-                              textAlign: "center",
-                            }}
-                          >
-                            <img
-                              width="40px"
-                              src="UPI.png"
-                              alt=""
-                              style={{
-                                marginLeft: "7px",
-                                paddingBottom: "10px",
-                                paddingLeft: "3px",
-                                paddingTop: "5px",
-                              }}
-                            />
-                          </div>
-                          <div className="d-flex justify-content-center flex-column ml-4">
-                            <div className="jss30">
-                              <strong>Deposit Here</strong>
-                            </div>
-                            <div className="jss31"></div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {Boolean(isPhonePeActive) && (
-                      <div
-                        onClick={() => {
-                          method.current = "upipay";
-                          phonePeDepositeUpi(
-                            "link",
-                            "upi",
-                            "upipay",
-                            "Phonepe"
-                          );
-                        }}
-                        className="add-fund-box mt-3"
-                        style={{ paddingTop: "0px", height: "60px" }}
-                      >
-                        <div
-                          className="d-flex align-items-center"
-                          style={{
-                            backgroundColor: "#fafafa",
-                            border: "1px solid #e0e0e0",
-                            borderRadius: "7px",
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              height: "60px",
-                              display: "flex",
-                              textAlign: "center",
-                            }}
-                          >
-                            <img
-                              width="40px"
-                              src="UPI.png"
-                              alt=""
-                              style={{
-                                marginLeft: "7px",
-                                paddingBottom: "10px",
-                                paddingLeft: "3px",
-                                paddingTop: "5px",
-                              }}
-                            />
-                          </div>
-                          <div className="d-flex justify-content-center flex-column ml-4">
-                            <div className="jss30">
-                              <strong>Deposit PhonePe</strong>
-                            </div>
-                            <div className="jss31"></div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {Boolean(isDecentroActive) && (
-                      <div
-                        onClick={() => {
-                          method.current = "upipay";
-                          decentroDepositeUpi(
-                            "link",
-                            "upi",
-                            "upipay",
-                            "decentropay"
-                          );
-                        }}
-                        className="add-fund-box mt-3"
-                        style={{ paddingTop: "0px", height: "60px" }}
-                      >
-                        <div
-                          className="d-flex align-items-center"
-                          style={{
-                            backgroundColor: "#fafafa",
-                            border: "1px solid #e0e0e0",
-                            borderRadius: "7px",
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              height: "60px",
-                              display: "flex",
-                              textAlign: "center",
-                            }}
-                          >
-                            <img
-                              width="40px"
-                              src="UPI.png"
-                              alt=""
-                              style={{
-                                marginLeft: "7px",
-                                paddingBottom: "10px",
-                                paddingLeft: "3px",
-                                paddingTop: "5px",
-                              }}
-                            />
-                          </div>
-                          <div className="d-flex justify-content-center flex-column ml-4 mb-5">
-                            <div className="jss30">
-                              <strong>Desposit Now</strong>
-                            </div>
-                            <div className="jss31"></div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {Boolean(isManualPaymentActive) && (
-                      <div className="m-2">
-                        <img
-                          src={baseUrl + isManualUPIQR}
-                          style={{ width: "100%" }}
-                          alt="img"
-                        />
-                      </div>
-                    )}
-                    {Boolean(isManualPaymentActive) && (
-                      <form
-                        onSubmit={ManualPayment}
-                        method="POST"
-                        encType="multipart/form-data"
-                      >
-                        <label htmlFor="username " className="mr-5">
-                          <i className="far fa-bank mr-2"></i>Enter UTR Number
-                        </label>
-                        <div className="col-12 mb-3 p-0">
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="referenceId"
-                            placeholder="Enter UTR Number"
-                            name="referenceId"
-                            value={upiUtrNum}
-                            onChange={(e) => setupiUtrNum(e.target.value)}
-                            required
-                          />
-                        </div>
-
-                        <div
-                          className="add-fund-box mt-3"
-                          style={{ paddingTop: "0px", height: "60px" }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              backgroundColor: "#fafafa",
-                              border: "1px solid #e0e0e0",
-                              borderRadius: "7px",
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center"
-                              style={{ textAlign: "center" }}
-                            >
-                              <img
-                                width="40px"
-                                src="UPI.png"
-                                alt=""
-                                style={{
-                                  marginLeft: "7px",
-                                  paddingBottom: "10px",
-                                  paddingLeft: "3px",
-                                  paddingTop: "5px",
-                                }}
-                              />
-                            </div>
-                            <div className="d-flex justify-content-center flex-column ml-4">
-                              <div className="jss30">
-                                <strong>Upload Screenshot</strong>
-                              </div>
-                              <div className="jss31">
-                                <input
-                                  type="file"
-                                  name="Screenshot"
-                                  onChange={handleChange}
-                                  accept="image/*"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className=" m-2 text-center">
-                          <button type="submit" className="btn btn-success">
-                            Submit
-                          </button>
-                        </div>
-
-                        <div style={{ width: "100%", height: "400px" }}>
-                          <img src={scrnshot1} style={{ width: "100%" }} />
-                        </div>
-                      </form>
-                    )}
-
-                    {Boolean(isMobile) && Boolean(isCashFreeActive) && (
-                      <div>
-                        <div
-                          onClick={() => {
-                            method.current = "gpay";
-                            deposit("link", "upi", "gpay");
-                          }}
-                          className="add-fund-box mt-3"
-                          style={{ paddingTop: "0px", height: "60px" }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              backgroundColor: "#fafafa",
-                              border: "1px solid #e0e0e0",
-                              borderRadius: "7px",
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center"
-                              style={{
-                                height: "60px",
-                                display: "flex",
-                                textAlign: "center",
-                              }}
-                            >
-                              <img
-                                width="40px"
-                                src="gpay-logo.png"
-                                alt=""
-                                style={{
-                                  marginLeft: "7px",
-                                  paddingBottom: "10px",
-                                  paddingLeft: "3px",
-                                  paddingTop: "5px",
-                                }}
-                              />
-                            </div>
-                            <div className="d-flex justify-content-center flex-column ml-4">
-                              <div className="jss30">
-                                <strong>G-Pay</strong>
-                              </div>
-                              <div className="jss31"></div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          onClick={() => {
-                            method.current = "phonepe";
-                            deposit("link", "upi", "phonepe");
-                          }}
-                          className="add-fund-box mt-3"
-                          style={{ paddingTop: "0px", height: "60px" }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              backgroundColor: "#fafafa",
-                              border: "1px solid #e0e0e0",
-                              borderRadius: "7px",
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center"
-                              style={{
-                                height: "60px",
-                                display: "flex",
-                                textAlign: "center",
-                              }}
-                            >
-                              <img
-                                width="40px"
-                                src="/phonepe-logo.png"
-                                alt=""
-                                style={{
-                                  marginLeft: "7px",
-                                  paddingBottom: "10px",
-                                  paddingLeft: "3px",
-                                  paddingTop: "5px",
-                                }}
-                              />
-                            </div>
-                            <div className="d-flex justify-content-center flex-column ml-4">
-                              <div className="jss30">
-                                <strong>PhonePe</strong>
-                              </div>
-                              <div className="jss31"></div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          onClick={() => {
-                            method.current = "paytm";
-                            deposit("link", "upi", "paytm");
-                          }}
-                          className="add-fund-box mt-3"
-                          style={{ paddingTop: "0px", height: "60px" }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              backgroundColor: "#fafafa",
-                              border: "1px solid #e0e0e0",
-                              borderRadius: "7px",
-                            }}
-                          >
-                            <div
-                              className="d-flex align-items-center"
-                              style={{
-                                height: "60px",
-                                display: "flex",
-                                textAlign: "center",
-                              }}
-                            >
-                              <img
-                                width="40px"
-                                src="/paytm-logo.png"
-                                alt=""
-                                style={{
-                                  marginLeft: "7px",
-                                  paddingBottom: "10px",
-                                  paddingLeft: "3px",
-                                  paddingTop: "5px",
-                                }}
-                              />
-                            </div>
-                            <div className="d-flex justify-content-center flex-column ml-4">
-                              <div className="jss30">
-                                <strong>Paytm UPI</strong>
-                              </div>
-                              <div className="jss31"></div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {Boolean(!isMobile) && Boolean(isCashFreeActive) && (
-                      <div
-                        className="add-fund-box mt-3"
-                        onClick={() => {
-                          deposit("qrcode", "upi");
-                        }}
-                        style={{ paddingTop: "0px", height: "60px" }}
-                      >
-                        <div
-                          className="d-flex align-items-center"
-                          style={{
-                            backgroundColor: "#fafafa",
-                            border: "1px solid #e0e0e0",
-                            borderRadius: "7px",
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{ height: "60px" }}
-                          >
-                            <img
-                              width="45px"
-                              src="/qr-scan.png"
-                              alt=""
-                              style={{
-                                marginLeft: "7px",
-                                paddingLeft: "3px",
-                              }}
-                            />
-                          </div>
-                          <div className="d-flex justify-content-center flex-column ml-4">
-                            <div className="jss30">
-                              <strong>Scan QR Code</strong>
-                            </div>
-                            <div className="jss31"></div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {Boolean(isCashFreeActive) && (
-                      <div className="games-section-title mt-3">
-                        Other Options
-                      </div>
-                    )}
-
-                    {Boolean(isCashFreeActive) && (
-                      <div
-                        className="add-fund-box mt-3"
-                        onClick={() => {
-                          setNext(4);
-                        }}
-                        style={{ paddingTop: "0px", height: "60px" }}
-                      >
-                        <div
-                          className="d-flex align-items-center"
-                          style={{
-                            backgroundColor: "#fafafa",
-                            border: "1px solid #e0e0e0",
-                            borderRadius: "7px",
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{ height: "60px" }}
-                          >
-                            <img
-                              width="45px"
-                              src="all-wallets.png"
-                              alt=""
-                              style={{
-                                marginLeft: "7px",
-                                paddingBottom: "10px",
-                                paddingLeft: "3px",
-                                paddingTop: "5px",
-                              }}
-                            />
-                          </div>
-                          <div className="d-flex justify-content-center flex-column ml-4">
-                            <div className="jss30">
-                              <strong>Other Wallets</strong>
-                            </div>
-                            <div className="jss31"></div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {Boolean(isCashFreeActive) && (
-                      <div
-                        className="add-fund-box mt-3"
-                        onClick={() => {
-                          setNext(5);
-                        }}
-                        style={{ paddingTop: "0px", height: "60px" }}
-                      >
-                        <div
-                          className="d-flex align-items-center"
-                          style={{
-                            backgroundColor: "#fafafa",
-                            border: "1px solid #e0e0e0",
-                            borderRadius: "7px",
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{ height: "60px" }}
-                          >
-                            <img
-                              width="45px"
-                              src="/bank1.png"
-                              alt=""
-                              style={{
-                                marginLeft: "7px",
-                                paddingBottom: "10px",
-                                paddingLeft: "3px",
-                                paddingTop: "5px",
-                              }}
-                            />
-                          </div>
-                          <div className="d-flex justify-content-center flex-column ml-4">
-                            <div className="jss30">
-                              <strong>Net Banking</strong>
-                            </div>
-                            <div className="jss31"></div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                          <FaChevronRight className="text-muted" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1849,7 +2189,9 @@ const checkUpiDepositStatus = (txnID) => {
           {Boolean(process) && (
             <div className="loaderReturn" style={{ zIndex: "99" }}>
               <img
-                src={"https://Haryanaludo.com/Images/LandingPage_img/old-loader1.gif"}
+                src={
+                  "https://Haryanaludo.com/Images/LandingPage_img/old-loader1.gif"
+                }
                 style={{ width: "100%" }}
                 alt="img"
               />

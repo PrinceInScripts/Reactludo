@@ -194,8 +194,19 @@ const Login = () => {
     <>
       <div className="login-bg">
         <div className="login-card">
-          <div className="login-title">🎲 Khelobuddy Ludo</div>
-          <div className="login-subtitle">Sign in or Sign up</div>
+          <div className="login-title" style={{ display: "flex", alignItems: "center" }}>
+             <picture style={{ marginRight: "10px" }}>
+              <img
+                src="/khelobuddy/logo.png"
+                alt="Khelobuddy Logo"
+                className="login-logo"
+                width={40}
+                height={40}
+              />
+            </picture>
+            <span style={{ fontSize: "32px" , fontWeight: "bold" }}>KheloBuddy</span>
+             </div>
+          <div className="login-subtitle">Login / Signup</div>
           <form>
             <div className="login-input-wrapper">
               <span className="login-country">+91</span>

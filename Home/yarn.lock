@@ -9138,6 +9138,11 @@ react-freshchat@^1.0.11:
     lodash "^4.17.4"
     react "^16.2.0"
 
+react-icons@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.npmjs.org/react-icons/-/react-icons-5.5.0.tgz"
+  integrity sha512-MEFcXdkP3dLo8uumGI5xN3lDFNsRtrjbOEKDLD7yv76v4wpnEq2Lt2qeHaQOr34I/wPN3s3+N08WkQ+CW37Xiw==
+
 react-image-crop@^10.0.4:
   version "10.1.8"
   resolved "https://registry.npmjs.org/react-image-crop/-/react-image-crop-10.1.8.tgz"
@@ -9347,7 +9352,7 @@ react-transition-group@^4.4.1, react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^15.0.0 || ^16.0.0", "react@^15.3.0 || ^16.0.0 || ^17.0.0", "react@^16 || ^17 || ^18", react@^16.14.0, react@^16.2.0, react@^16.3.0, "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^16.9.0, "react@^17.0.0 || ^18.0.0", react@^17.0.2, "react@>= 15", "react@>= 16", react@>=0.14.0, react@>=15, react@>=15.0.0, react@>=16, react@>=16.13.1, react@>=16.3.0, react@>=16.3.2, react@>=16.6.0, react@>=16.8.0:
+react@*, "react@^15.0.0 || ^16.0.0", "react@^15.3.0 || ^16.0.0 || ^17.0.0", "react@^16 || ^17 || ^18", react@^16.14.0, react@^16.2.0, react@^16.3.0, "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", react@^16.9.0, "react@^17.0.0 || ^18.0.0", react@^17.0.2, "react@>= 15", "react@>= 16", react@>=0.14.0, react@>=15, react@>=15.0.0, react@>=16, react@>=16.13.1, react@>=16.3.0, react@>=16.3.2, react@>=16.6.0, react@>=16.8.0:
   version "16.14.0"
   resolved "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
   integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
