@@ -1509,23 +1509,23 @@ router.get('/website/setting', async (req, res) => {
     //console.log('gatway RazorPaySecretKey',paymentGateway.RazorPaySecretKey);
     //console.log('gatway AccountName',paymentGateway.AccountName);
     const webSetting = {
-        'isCashFreeActive':false,
-        'isPhonePeActive':false,
-        'isRazorPayActive':false,
-        'isDecentroActive':false,
-        'isManualPaymentActive':false,
+        'isCashFreeActive':true,
+        'isPhonePeActive':true,
+        'isRazorPayActive':true,
+        'isDecentroActive':true,
+        'isManualPaymentActive':true,
         'isManualUPIQR': '', //paymentGateway.QRcode,
-        'isUpiGatewayActive':false,
+        'isUpiGatewayActive':true,
     
-        'isManualPayoutActive':false,
-        'isCashFreePayoutActive':false,
+        'isManualPayoutActive':true,
+        'isCashFreePayoutActive':true,
         'isRazorPayPayoutActive':paymentGateway.RazorPayout,
         'isDecentroPayoutActive':paymentGateway.decentroPayout,
         'maxAutopayAmt':1500,
 
         'RazorPayKey':'rzp_test_TF4g8dFj5CY16x',
         'RazorPaySecretKey':'ZiQZdaTqC6G0mOGkUfe927n9',
-        'AccountName':paymentGateway.AccountName,
+        'AccountName':paymentGateway.AccountName ? paymentGateway.AccountName : "The Team",
 
         'isDecentroPayoutAuto':paymentGateway.decentroAuto,
         'isRazorPayPayoutAuto':paymentGateway.RazorpayAuto,

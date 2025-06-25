@@ -90,10 +90,10 @@ const Redeem = ({ walletUpdate }) => {
                 <div className="games-section-title">Redeem Your Referral Balance</div>
               </div>
               <div className="card-body">
-                <div className="games-section-headline" style={{ fontSize: "1em", fontWeight: "bold" }}>
+                <div className="games-section-headline" style={{ fontSize: "1em", fontWeight: 500 }}>
                   TDS (0%) will be deducted after annual referral earning of ₹15,000.
                 </div>
-                <div className="games-section-headline mt-3">
+                <div className="games-section-headline mt-3" style={{ fontSize: "1.3em", fontWeight: 800 }}>
                   Enter Amount (Min: ₹50, Max: ₹10,000)
                 </div>
                 <div className="MuiFormControl-root MuiTextField-root mt-4">
@@ -105,7 +105,7 @@ const Redeem = ({ walletUpdate }) => {
                     placeholder="Enter Amount"
                     onChange={(e) => setAmount(parseInt(e.target.value))}
                   />
-                  <p className="MuiFormHelperText-root">
+                  <p className="MuiFormHelperText-root text-success" style={{ fontSize: "0.8em", marginTop: "5px" }}>
                     Money will be added to cash.
                   </p>
                 </div>

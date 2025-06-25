@@ -116,7 +116,7 @@ const Refer = () => {
                 className="card-header text-center"
                 style={{
                   fontWeight: "bold",
-                  fontSize: "14px",
+                  fontSize: "2rem",
                   letterSpacing: "0.9px",
                   backgroundColor: "#f8f9fb",
                   padding: "7px 16px",
@@ -133,21 +133,83 @@ const Refer = () => {
                 }}
               >
                 <div className="d-flex justify-content-between align-items-center">
-                  <div className="text-center font-9">
-                    Referred Players:&nbsp;
-                    <b>{cardData && cardData}</b>
+                  <div className="text-center d-flex justify-content-between flex-column align-items-center font-9">
+                    <span><b>{cardData && cardData}</b></span>
+                    <span> Referred Players</span>
                   </div>
-                  <div className="text-center font-9">
-                    Referral Earning:
-                    <b>
-                      {" "}
+                  <div className="text-center d-flex justify-content-between flex-column align-items-center font-9">
+                    <span className="d-flex justify-content-between align-items-center"><b>
+                      ₹ &nbsp;
                       {user && user.referral_earning !== undefined
                         ? user.referral_earning.toFixed(0)
                         : "0"}
-                    </b>
+                    </b></span>
+                    <span> Total Earnings</span>
+                    
                   </div>
                 </div>
               </div>
+              <div
+                  className="card mb-2 p-2"
+                  style={{
+                    borderRadius: "5px",
+                    boxShadow: "0px 0px 5px rgba(128, 128, 128)",
+                    backgroundColor: "#e9ecef",
+                  }}
+                >
+                  <div className="d-flex justify-content-between align-items-center">
+                  <div className="d-flex justify-content-between  align-items-center">
+                    <span className="font-10" style={{ color: "#495057",marginRight: "10px" }}>
+                      Your Current Earnings:
+                    </span>
+                    <span
+                      className="font-10"
+                      style={{
+                        padding: "1px 10px",
+                        margin: "1px",
+                        backgroundColor: "#28a745",
+                        borderRadius: "4px",
+                        color: "#fff",
+                        width: "60px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      {/* <img
+                        height="18px"
+                        width="18px"
+                        src={
+                          process.env.PUBLIC_URL +
+                          "/Images/LandingPage_img/earning.png"
+                        }
+                        alt=""
+                        style={{ borderRadius: "5px" }}
+                      /> */}
+                      ₹ &nbsp;
+                      <b>
+                        {user && user.referral_wallet !== undefined
+                          ? user.referral_wallet.toFixed(1)
+                          : "N/A"}
+                      </b>
+                    </span>
+                    </div>
+                    <Link
+                      className="btn btn-sm btn-outline-primary"
+                      to="/Redeem"
+                      style={{
+                        fontSize: "10px",
+                        borderRadius: "4px",
+                        padding: "2px 8px",
+                        backgroundColor: "#007bff",
+                        color: "#fff",
+                      }}
+                    >
+                      <span className="font-9" style={{ color: "white" }}>
+                        Redeem
+                      </span>
+                    </Link>
+                  </div>
+                </div>
 
               <div className="p-2">
                 <div className="font-14 text-center mb-2"></div>
@@ -197,68 +259,10 @@ const Refer = () => {
                     </div>
                   </div>
                 </div>
-                <div
-                  className="card mb-2 p-2"
-                  style={{
-                    borderRadius: "5px",
-                    boxShadow: "0px 0px 5px rgba(128, 128, 128)",
-                    backgroundColor: "#e9ecef",
-                  }}
-                >
-                  <div className="d-flex justify-content-between align-items-center">
-                    <span className="font-10" style={{ color: "#495057" }}>
-                      Your Current Earnings:
-                    </span>
-                    <span
-                      className="font-10"
-                      style={{
-                        padding: "1px 10px",
-                        margin: "1px",
-                        backgroundColor: "#28a745",
-                        borderRadius: "4px",
-                        color: "#fff",
-                        width: "60px",
-                        display: "flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      {/* <img
-                        height="18px"
-                        width="18px"
-                        src={
-                          process.env.PUBLIC_URL +
-                          "/Images/LandingPage_img/earning.png"
-                        }
-                        alt=""
-                        style={{ borderRadius: "5px" }}
-                      /> */}
-                      ₹
-                      &nbsp;
-                      <b>
-                        {user && user.referral_wallet !== undefined
-                          ? user.referral_wallet.toFixed(1)
-                          : "N/A"}
-                      </b>
-                    </span>
-                    <Link
-                      className="btn btn-sm btn-outline-primary"
-                      to="/Redeem"
-                      style={{
-                        fontSize: "10px",
-                        borderRadius: "4px",
-                        padding: "2px 8px",
-                        backgroundColor: "#007bff",
-                        color: "#fff",
-                      }}
-                    >
-                      <span className="font-9" style={{ color: "white" }}>
-                        Redeem
-                      </span>
-                    </Link>
-                  </div>
-                </div>
+                
               </div>
             </div>
+            
             <div
               className="card mt-2"
               style={{

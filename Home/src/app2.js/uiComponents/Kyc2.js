@@ -86,8 +86,8 @@ const Kyc2 = ({ user }) => {
 
 
 
-<div className="container-fluid" style={{ padding: "60px 1rem 1rem" }}>
-   <div className="pt-1 mb-5">
+<div className="container-fluid" style={{ padding: "60px 1rem 1rem",width: "480px",marginLeft:0,marginRight:0 }}>
+   <div className="pt-3 mb-5">
     <div className="card" style={{ border: "1px solid #ccc" }}>
       <div className="card-header text-center" style={{ fontWeight: "bold", fontSize: "15px", letterSpacing: "0.3px", fontFamily: "Poppins" }}>
         KYC

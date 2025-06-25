@@ -527,16 +527,18 @@ export default function ViewGame1(props) {
                   {Game.Room_code == 0 && (
                     Game.Created_by?._id == user ? (
                       <div className='roomCode cxy flex-column'>
-                        {roomcode.length !== 8 && <p style={{ color: 'red', fontSize: '6px' }}>Set Only Classic Room Code.</p>}
-                        <input 
+                        {roomcode.length !== 8 && <h2 style={{ color: 'red', fontSize: '22px' ,fontFamily:'sans-serif' }}>Set Only Classic Room Code.</h2>}
+                        <div className='d-flex justify-content-center gap-2' style={{ gap: '10px', marginTop: '10px' }}>
+                          <input 
                           type='number' 
-                          className="cool-input mt-1 w-10" 
+                          className="cool-input mt-1 mb-2 w-10" 
                           style={{ 
                             backgroundColor: '#f4f4f4', 
                             border: '1px solid #0FFF50', 
                             borderRadius: '2px',
                             height: '35px', 
-                            boxShadow: '0 0 5px rgba(0, 255, 80, 0.5)'
+                            boxShadow: '0 0 5px rgba(0, 255, 80, 0.5)',
+                            padding: '0 10px',
                           }} 
                           value={roomcode} 
                           onChange={(e) => {
@@ -547,11 +549,12 @@ export default function ViewGame1(props) {
                           title="Enter Room Code"
                         /> 
                         <button
-                          className={`btn btn-success btn-block sm m-1 position-static`}
+                          className={`btn btn-primary btn-block sm m-1 position-static`}
                           style={{ 
-                            width: "200px",
+                            width: "180px",
+                            height: "35px",
                             margin: "10px !important", 
-                            backgroundColor: "#85ABE8", 
+                            // backgroundColor: "#85ABE8", 
                             borderRadius: "3px",
                             color: "white",
                             border: "2px blue",
@@ -575,10 +578,12 @@ export default function ViewGame1(props) {
                             <span style={{marginLeft: "15px", color: "white"}}><b>SET ROOMCODE</b></span>
                           ) : (
                             <span className="font-9" style={{ color: 'WHITE', fontWeight: 'bold' }}>
-                              <i className="fa fa-share-alt"></i> Share Code
+                              {/* <i className="fa fa-share-alt"></i> Share Code */}
+                              Update Room Code
                             </span>
                           )}
                         </button> 
+                        </div>
                       </div>
                     ) : (
                       <div className='roomCode cxy flex-column'>
@@ -594,16 +599,30 @@ export default function ViewGame1(props) {
                   )}
 
                   {/* Match Status Section */}
-                  <div className="card mt-0" style={{ border: '1px solid #ccc', width: '96%', margin: '0 auto', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19)' }}>
+                  <div className="card mt-0" style={{ fontFamily:'roboto',border: '1px solid #ccc', width: '96%', margin: '0 auto', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19)' }}>
                     <div className="card-header text-center" style={{ fontWeight: 'bold', fontSize: '14px', letterSpacing: '0.9px', backgroundColor: '#f8f9fb', padding: '7px 16px', margin: 'top' }}>
                       Match Status
                     </div>
                     <div className="card mb-2 p-2" style={{ borderRadius: '8px', boxShadow: '0px 0px 5px rgba(128, 128, 128)' }}>
                       <form className='result-area' onSubmit={Result} encType="multipart/form-data">
                         {fecthStatus !== null && fecthStatus !== undefined && (
-                          <div className="card" style={{ backgroundColor: 'lightgrey' }}>
-                            <p>You have already updated your battle result for <h6 className='d-inline-block text-uppercase' style={{ color: 'red', fontWeight: 'bold' }}>{fecthStatus}</h6></p>
-                            please wait for review by admin
+                          <div className="card" style={{ border: '1px solid rgb(204, 204, 204)', borderRadius: '8px' }}>
+                            <div className="d-flex justify-content-center align-items-center" style={{ backgroundColor:'#F8F1DD',fontSize: '1.2em', fontWeight: 'bold', color: 'red',padding:'5px' }} >
+                               <div>
+                                  <picture>
+                                    <img src="https://cdn-icons-png.flaticon.com/128/18964/18964048.png" width='45px' alt='' />
+                                  </picture>
+                               </div>
+                               <div className='d-flex flex-column align-items-center'>
+                                 <h2 className='text-uppercase' style={{ color: '#000', fontWeight: 'bold',fontSize:'18px',marginBottom:0 }}>Awaiting Result</h2>
+                                  <h2 className='text-success' style={{ fontSize:'12px',marginBottom:0,fontWeight:900 }}><img src='https://cdn-icons-png.flaticon.com/128/6785/6785304.png' width={15} style={{ marginRight: '5px' }} />Battle Result <b> Submitted</b>  </h2>
+                               </div>
+                            </div>
+
+                            <div style={{ padding: '10px', textAlign: 'center', fontSize: '1.2em', color: '#333' }}>
+                               <p>You have already updated your battle result for <h6 className='d-inline-block text-uppercase' style={{ color: 'red', fontWeight: 'bold' }}>{fecthStatus}</h6></p>
+                               <div className='btn btn-primary' style={{ borderRadius: '8px' }}>  please wait for review by admin</div>
+                            </div>
                           </div>
                         )}
 
